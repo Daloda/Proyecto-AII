@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .forms import UserCreateFormAdmin, UserChangeForm
 
 from django.contrib.auth import get_user_model 
+from main.models import Moto
 
 User=get_user_model()
 class UserAdmin(BaseUserAdmin):
@@ -34,6 +35,7 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Moto)
 admin.site.unregister(Group)
 
 

@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 class Moto(models.Model):
+    foto = models.CharField(_('Photo'),max_length=30, null=True)
     modelo = models.CharField(_('Model'),max_length=30)
     fabricante = models.CharField(_('Maker'),max_length=30)
     cilindrada = models.CharField(_('Displacement'),max_length=30)
