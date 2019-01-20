@@ -148,8 +148,6 @@ LANGUAGES = (
 LANGUAGE_CODE = 'en-us'
 _ = lambda s: s
 
-LANGUAGE_CODE = 'es-ES'
-
 TIME_ZONE = 'Europe/Madrid'
 
 USE_I18N = True
