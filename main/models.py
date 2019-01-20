@@ -7,6 +7,13 @@ from django.utils.translation import ugettext_lazy as _
 
 
 # Create your models here.
+class Moto(AbstractBaseUser, PermissionsMixin):
+    modelo = models.CharField(_('First name'),max_length=30, blank=True)
+    fabricante = models.CharField(_('First name'),max_length=30, blank=True)
+    cilindrada = models.CharField(_('First name'),max_length=30, blank=True)
+    potencia_maxima = models.CharField(_('First name'),max_length=30, blank=True)
+    periodo_comercializacion = models.CharField(_('First name'),max_length=30, blank=True)
+    
 class User(AbstractBaseUser, PermissionsMixin):
     SEX_OPTIONS = (
         ('M', 'Man'),
@@ -19,6 +26,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     birthdate = models.DateField(_('Birthdate'),null=True)
     city = models.CharField(_('City'),max_length=80, blank=True)
     sex = models.CharField(_('Sex'),max_length=1, choices=SEX_OPTIONS, null=True)
+    rol = models.CharField(max_length=1, choices=(('D', 'Deportivo'),('A','Aventurero'),('R','Rutero'),))
+    moto=models.ManyToManyField(Moto)
     is_active = models.BooleanField(_('Is active'),default=True)
     is_staff = models.BooleanField(_('Is staf'),default=False)
 
