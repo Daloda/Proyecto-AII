@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+{% load custom_tags %}
+  
+{% block content %}
+
+<!-- Para el login con redes sociales, es necesario acceder desde localhost, no 127.0.0.1 -->
+{% if request.build_absolute_uri == "http://127.0.0.1:8000/" %}
+  <script>
+    window.location.replace("http://localhost:8000/");
+  </script>
+{% endif %}
+
+<h4>Categorias</h4>
+<br>
+    <div class="search-bikes row">
+        <div class="col s6 offset-s3">
+            <nav>
+                <div class="nav-wrapper grey">
+                    <form>
+                        <div class="input-field">
+                        <input id="search" type="search" required placeholder="Busca una moto">
+                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                        <i class="material-icons">close</i>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="categorias">
+        <div class="row card grey">
+       
+            <div class="categoria col s12 m6 l4">
+                <a href="#">
+                   <figure><img src="{% static 'img/moto1.jpg'%}" class="materialbox responsive-img card"></figure>
+                </a>     
+            </div>
+
+            <div class="categoria col s12 m6 l4">
+                <a href="#">
+                   <figure><img src="{% static 'img/moto1.jpg'%}" class="materialbox responsive-img card"></figure>
+                </a>     
+            </div>
+
+            <div class="categoria col s12 m6 l4">
+                <a href="#">
+                   <figure><img src="{% static 'img/moto1.jpg'%}" class="materialbox responsive-img card"></figure>
+                </a>     
+            </div>
+
+            <div class="categoria col s12 m6 l4">
+                <a href="#">
+                   <figure><img src="{% static 'img/moto1.jpg'%}" class="materialbox responsive-img card"></figure>
+                </a>     
+            </div>
+    </div>
+
+  </div>
+<!-- <div class="container">
+  	<h1>Materialize Image Gallery</h1>
+
+  	<div class="row card">
+  		
+  		<div class="col s12 m6 l4">
+  			<img src="images/a.jpeg" class="materialbox responsive-img card">
+  		</div>
+  		<div class="col s12 m6 l4">
+  			<img src="images/b.jpeg" class="materialbox responsive-img card">
+  		</div>
+  		<div class="col s12 m6 l4">
+  			<img src="images/c.jpeg" class="materialbox responsive-img card">
+  		</div>
+
+
+  		<div class="col s12 m6 l4">
+  			<img src="images/d.jpeg" class="materialbox responsive-img card">
+  		</div>
+  	
+  		<div class="col s12 m6 l4">
+  			<img src="images/e.jpeg" class="materialbox responsive-img card">
+  		</div>
+  		<div class="col s12 m6 l4">
+  			<img src="images/f.jpeg" class="materialbox responsive-img card">
+  		</div>
+  		
+  	 </div>   -->
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.collapsible').collapsible();
+});  
+
+</script>
+
+
+{% endblock %}

@@ -11,19 +11,26 @@
   </script>
 {% endif %}
 
-<div class="parallax-container">
-    <div class="parallax" ><img src="{% static 'img/3406.jpg'%}" alt="My image"/></div>
-  </div>
-  <div class="section white">
-    <div class="row container">
-      <h2 class="header">{% trans "Welcome" %}{% if user.is_authenticated %}{% if user.first_name != "" %}, {{ user.first_name }}{% endif %}{% endif %}</h2>
+<div class="index-container">
+    <div class="parallax-container">
+        <div class="parallax" ><img src="{% static 'img/moto1.jpg'%}" alt="My image"/></div>
     </div>
-  </div>  
-        <br>
-        <br>
-  <div class="parallax-container">
-    <div class="parallax"><img src="{% static 'img/OFdxCob.jpg'%}"></div>
-</div>
+
+    <div class="section grey darken 4">
+
+    <div class="row container">
+
+      <h2 class="header">{% trans "Welcome" %}{% if user.is_authenticated %}{% if user.first_name != "" %}, {{ user.first_name }}{% endif %}{% endif %}</h2>
+    
+    </div>
+    </div>
+
+    <div class="parallax-container">
+        <div class="parallax"><img src="{% static 'img/moto3.jpg'%}" width="1920" height="1080"></div>
+    </div>
+
+</div>    
+
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -32,6 +39,13 @@ $(document).ready(function(){
 $(document).ready(function(){
   $('.collapsible').collapsible();
 });  
+
+</script>
+
+<script>
+  $('.carousel.carousel-slider').carousel({
+    fullWidth: true
+  });
 </script>
 
 {% endblock %}
