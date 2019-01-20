@@ -21,8 +21,9 @@ from django.conf.urls import url, include
 urlpatterns = [
     path('', index, name="index"),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('login/', obtain_auth_token),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', LogoutView.as_view()),
     path('getuser/', GetUserView.as_view()),
     path('signup/', signUp),   
     path('activate/', Activate.as_view(), name='activate'),   
