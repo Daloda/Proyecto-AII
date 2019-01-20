@@ -1,0 +1,101 @@
+html {
+    height: 100%;
+}
+
+body{
+    text-align: center;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color:#bdbdbd;
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+    color: #263238;
+}
+
+.body{
+    min-height: 100%;
+    margin: auto;
+}
+
+.collapsibleInformation{
+    margin-left: 5%;
+    display:inline-block;
+}
+
+.index-container{
+    margin-top: -50px;
+    margin-bottom: -50px;
+    width: 120%;
+    margin-left: -10%
+}
+.menu{
+    font-family: 'Satisfy', cursive ;
+    margin-bottom: 50px;
+}
+nav ul li{
+  background-color: #212121;
+  background-image: linear-gradient(dodgerblue, dodgerblue);
+  background-size: 0 5px, auto;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  transition: all .2s ease-out !important;
+}
+
+nav ul li:hover {
+   background-size: 100% 5px, auto;
+   background-color: #3f3f3f;
+}
+
+.categorias{
+    width: 85%;
+    margin: auto;
+}
+
+figure img {
+	-webkit-filter: grayscale(0) blur(0);
+	filter: grayscale(0) blur(0);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out !important;
+}
+
+figure:hover img {
+	-webkit-filter: grayscale(100%) blur(3px);
+	filter: grayscale(100%) blur(3px);
+}
+.userEmail{
+    margin-right: 4%;
+}
+
+.brand-logo{
+    font-family: 'Satisfy', cursive;
+}
+
+h4{
+    font-family: 'Comfortaa', cursive;
+    color: #263238; 
+}
+
+h5, p{
+    font-family: 'Comfortaa', cursive;
+    color: #263238;
+}
+
+.decideFooter{
+    margin-top:50px;
+}
+
+.decideFooterContainer{
+    padding-bottom:20px;
+}
+
+.errorlist
+    {
+        color: red;
+    }
+    
+/* or if you want to change field border color then */
+.error input, .error select {
+border: 2px red solid;
+}
+

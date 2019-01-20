@@ -1,9 +1,52 @@
-<html>
-<head>
-<title>Recommender System Movielens</title>
-</head>
-<body>
-{% include 'header.html' %}
-<h1>Welcome to Recommender System for MovieLens!!!</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load i18n static %}
+{% load custom_tags %}
+  
+{% block content %}
+
+<!-- Para el login con redes sociales, es necesario acceder desde localhost, no 127.0.0.1 -->
+{% if request.build_absolute_uri == "http://127.0.0.1:8000/" %}
+  <script>
+    window.location.replace("http://localhost:8000/");
+  </script>
+{% endif %}
+
+<div class="index-container">
+    <div class="parallax-container">
+        <div class="parallax" ><img src="{% static 'img/moto1.jpg'%}" alt="My image"/></div>
+    </div>
+
+    <div class="section grey darken 4">
+
+    <div class="row container">
+
+      <h2 class="header">{% trans "Welcome" %}{% if user.is_authenticated %}{% if user.first_name != "" %}, {{ user.first_name }}{% endif %}{% endif %}</h2>
+    
+    </div>
+    </div>
+
+    <div class="parallax-container">
+        <div class="parallax"><img src="{% static 'img/moto3.jpg'%}" width="1920" height="1080"></div>
+    </div>
+
+</div>    
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.parallax').parallax();
+  });
+$(document).ready(function(){
+  $('.collapsible').collapsible();
+});  
+
+</script>
+
+<script>
+  $('.carousel.carousel-slider').carousel({
+    fullWidth: true
+  });
+</script>
+
+{% endblock %}
+
