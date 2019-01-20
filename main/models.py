@@ -7,12 +7,15 @@ from django.utils.translation import ugettext_lazy as _
 
 
 # Create your models here.
-class Moto(AbstractBaseUser, PermissionsMixin):
-    modelo = models.CharField(_('First name'),max_length=30, blank=True)
-    fabricante = models.CharField(_('First name'),max_length=30, blank=True)
-    cilindrada = models.CharField(_('First name'),max_length=30, blank=True)
-    potencia_maxima = models.CharField(_('First name'),max_length=30, blank=True)
-    periodo_comercializacion = models.CharField(_('First name'),max_length=30, blank=True)
+class Moto(models.Model):
+    modelo = models.CharField(_('Model'),max_length=30)
+    fabricante = models.CharField(_('Maker'),max_length=30)
+    cilindrada = models.CharField(_('Displacement'),max_length=30)
+    potencia_maxima = models.CharField(_('Maximum power'),max_length=30, blank=True)
+    periodo_comercializacion = models.CharField(_('Marketing period'),max_length=30, blank=True)
+    
+    def __str__(self):
+        return self.modelo
     
 class User(AbstractBaseUser, PermissionsMixin):
     SEX_OPTIONS = (
@@ -20,13 +23,19 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('W', 'Woman'),
         ('N', 'Non-binary'),
     )
+    ROL_OPTIONS = (
+        ('D', 'Deportivo'),
+        ('A','Aventurero'),
+        ('R','Rutero'),
+    )
+    
     email = models.EmailField(_('Email'),unique=True)
     first_name = models.CharField(_('First name'),max_length=30, blank=True)
     last_name = models.CharField(_('Last name'),max_length=60, blank=True)
     birthdate = models.DateField(_('Birthdate'),null=True)
     city = models.CharField(_('City'),max_length=80, blank=True)
     sex = models.CharField(_('Sex'),max_length=1, choices=SEX_OPTIONS, null=True)
-    rol = models.CharField(max_length=1, choices=(('D', 'Deportivo'),('A','Aventurero'),('R','Rutero'),))
+    rol = models.CharField(max_length=1, choices=ROL_OPTIONS, null=True)
     moto=models.ManyToManyField(Moto)
     is_active = models.BooleanField(_('Is active'),default=True)
     is_staff = models.BooleanField(_('Is staf'),default=False)
