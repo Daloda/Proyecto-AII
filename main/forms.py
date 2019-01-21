@@ -18,7 +18,7 @@ class UserCreateForm(UserCreationForm):
     first_name = forms.CharField(label=_('First name'),required=False)
     last_name = forms.CharField(label=_('Last name'),required=False)
     email = forms.EmailField(label=_('Email'),required=True)
-    birthdate = forms.DateTimeField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
+    birthdate = forms.DateField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
     city = forms.CharField(label=_('City'),required=True)
     sex = forms.ChoiceField(label=_('Sex'),choices=SEX_OPTIONS, required=False)
     captcha = NoReCaptchaField()
@@ -45,7 +45,7 @@ class UserCreateForm(UserCreationForm):
     def clean(self, *args, **kwargs):
         cleaned_data = super(UserCreateForm, self).clean(*args, **kwargs)
         email = cleaned_data.get('email', None)
-        if email is not None:# look for in db
+        if email is not None:
             users = User.objects.all()
   
             for u in users:
@@ -59,12 +59,54 @@ class UserCreateForm(UserCreationForm):
               
             if birthdate > now:
                 self.add_error('birthdate', _('Future date not posible'))
+                
+class UserEditForm(UserCreationForm):
+    SEX_OPTIONS = (
+        ('M', _('Man')),
+        ('W', _('Woman')),
+        ('N', _('Non-binary')),
+    )
+    aux=_("Format: dd/mm/YYYY"),
+  
+    first_name = forms.CharField(label=_('First name'),required=False)
+    last_name = forms.CharField(label=_('Last name'),required=False)
+    email = forms.EmailField(label=_('Email'),required=True)
+    birthdate = forms.DateField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
+    city = forms.CharField(label=_('City'),required=True)
+    sex = forms.ChoiceField(label=_('Sex'),choices=SEX_OPTIONS, required=False)
+    password1 = forms.CharField(
+        label=_("Change password"),
+        strip=False,
+        widget=forms.PasswordInput,
+        help_text=_("Only fill if you want to change your password."),
+        required=False,
+    )
+    password2 = forms.CharField(
+        label=_("Password confirmation"),
+        widget=forms.PasswordInput,
+        strip=False,
+        help_text=_("Enter the same password as before, for verification."),
+        required=False,
+    )  
+  
+    class Meta:
+        model = User
+        fields = ("first_name", "last_name", "email", "birthdate", "city", "sex", "password1", "password2")
+      
+    def save(self, commit=True):
+        user = super(UserEditForm, self).save(commit=False)
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
+        user.email = self.cleaned_data["email"]
+        user.birthdate = self.cleaned_data["birthdate"]
+        user.city = self.cleaned_data["city"]
+        user.sex = self.cleaned_data["sex"]
+  
+        if commit:
+            user.save()
+        return user
   
 class UserChangeForm(forms.ModelForm):
-    """A form for updating users. Includes all the fields on
-    the user, but replaces the password field with admin's
-    password hash display field.
-    """
     password = ReadOnlyPasswordHashField()
   
     class Meta:
@@ -72,7 +114,6 @@ class UserChangeForm(forms.ModelForm):
         fields = ('email', 'password', 'birthdate', 'is_active')
   
     def clean_password(self):
-        # Regardless of what the user provides, return the initial value.
         return self.initial["password"]
   
   
@@ -88,7 +129,7 @@ class UserCreateFormAdmin(UserCreationForm):
     first_name = forms.CharField(label=_('First name'),required=False)
     last_name = forms.CharField(label=_('Last name'),required=False)
     email = forms.EmailField(label=_('Email'),required=True)
-    birthdate = forms.DateTimeField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
+    birthdate = forms.DateField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
     city = forms.CharField(label=_('City'),required=True)
     sex = forms.ChoiceField(label=_('Sex'),choices=SEX_OPTIONS, required=False)
   
@@ -114,7 +155,7 @@ class UserCreateFormAdmin(UserCreationForm):
     def clean(self, *args, **kwargs):
         cleaned_data = super(UserCreateFormAdmin, self).clean(*args, **kwargs)
         email = cleaned_data.get('email', None)
-        if email is not None:# look for in db
+        if email is not None:
             users = User.objects.all()
   
             for u in users:

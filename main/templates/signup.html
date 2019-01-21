@@ -5,12 +5,14 @@
 {% block content %}
 
     {% if user.is_authenticated %}
-    <script>
-        window.location.replace("/");
-    </script>
+        <h3>{% trans "Edit your data" %}</h3>
     {% endif %}
     
-    <h3>{% trans "Sign up a new user" %}</h3>
+     {% if not user.is_authenticated %}
+        <h3>{% trans "Sign up a new user" %}</h3>
+    {% endif %}
+    
+    
     <a href="{% url 'social:begin' 'google-oauth2' %}"><img class="left social-icon" src="{% static 'img/google_icon.png'%}"/></a>
     <a href="{% url 'social:begin' 'github' %}"><img class="left social-icon" src="{% static 'img/github_icon.png'%}"/></a>
     <a href="{% url 'social:begin' 'facebook' %}"><img class="left social-icon" src="{% static 'img/Facebook.png'%}"/></a>

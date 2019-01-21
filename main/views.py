@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .serializers import UserSerializer
 from django.http import HttpResponseRedirect
  
-from .forms import UserCreateForm
+from .forms import UserCreateForm, UserEditForm
 from django.contrib.auth import logout, login, update_session_auth_hash
  
 from rest_framework import parsers, renderers
@@ -24,6 +24,7 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponse 
 from django.contrib.auth.forms import PasswordChangeForm
 from .tokens import account_activation_token
+from urllib.request import HTTPRedirectHandler
  
  
 User=get_user_model()
@@ -131,6 +132,18 @@ def signUp(request):
     else:
         formulario = UserCreateForm()
     return render(request, 'signup.html', {'formulario':formulario})
+
+def edit_user(request):
+    if request.method == 'POST':
+        formulario = UserEditForm(request.POST, instance=request.user)
+        if formulario.is_valid():
+            user=formulario.save(commit=False)
+            user.save()
+            update_session_auth_hash(request, user)
+            return render(request, 'index.html')
+    else:
+        formulario = UserEditForm(instance=request.user)
+    return render(request, 'signup.html', {'formulario': formulario })
  
 class Activate(APIView):
     def get(self, request):
@@ -146,8 +159,7 @@ class Activate(APIView):
             user.is_active = True
             user.save()
             return render(request, "acc_active_email.html")
- 
- 
+
         else:
             return HttpResponse('Activation link is invalid!')
  
