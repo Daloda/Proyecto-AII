@@ -3,11 +3,12 @@ html {
 }
 
 body{
+    text-align: center;
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color:#fafafa;
-    font-family: 'Roboto';
+    background-color:#bdbdbd;
+    font-family: 'Comfortaa', cursive;
     font-size: 16px;
     color: #263238;
 }
@@ -15,7 +16,6 @@ body{
 .body{
     min-height: 100%;
     margin: auto;
-    width: 85%
 }
 
 .collapsibleInformation{
@@ -23,25 +23,61 @@ body{
     display:inline-block;
 }
 
+.index-container{
+    margin-top: -50px;
+    margin-bottom: -50px;
+    width: 120%;
+    margin-left: -10%
+}
 .menu{
+    font-family: 'Satisfy', cursive ;
     margin-bottom: 50px;
 }
+nav ul li{
+  background-color: #212121;
+  background-image: linear-gradient(dodgerblue, dodgerblue);
+  background-size: 0 5px, auto;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  transition: all .2s ease-out !important;
+}
 
+nav ul li:hover {
+   background-size: 100% 5px, auto;
+   background-color: #3f3f3f;
+}
+
+.categorias{
+    width: 85%;
+    margin: auto;
+}
+
+figure img {
+	-webkit-filter: grayscale(0) blur(0);
+	filter: grayscale(0) blur(0);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out !important;
+}
+
+figure:hover img {
+	-webkit-filter: grayscale(100%) blur(3px);
+	filter: grayscale(100%) blur(3px);
+}
 .userEmail{
     margin-right: 4%;
 }
 
 .brand-logo{
-    font-family: 'Roboto Slab';
+    font-family: 'Satisfy', cursive;
 }
 
 h4{
-    font-family: 'Roboto Slab';
+    font-family: 'Comfortaa', cursive;
     color: #263238; 
 }
 
 h5, p{
-    font-family: 'Roboto';
+    font-family: 'Comfortaa', cursive;
     color: #263238;
 }
 
