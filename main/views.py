@@ -39,7 +39,10 @@ def Motorcycle(request):
 
 def Profile(request):
     return render(request, "perfil.html") 
-     
+
+def Users(request):
+    return render(request, "usuarios.html") 
+
 class GetUserView(APIView):
     def post(self, request):
         key = request.data.get('token', '')

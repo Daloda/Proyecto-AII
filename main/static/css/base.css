@@ -165,6 +165,15 @@ border: 2px red solid;
   cursor: pointer;
 }
 
+#profile-card .card-users-image {
+  left:10%;
+  width: 75px;
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+  top:20%;
+}
+
 #profile-card .btn-move-up {
   position: relative;
   top: -40px;
