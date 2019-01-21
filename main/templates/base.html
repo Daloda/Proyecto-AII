@@ -18,7 +18,8 @@
 
         <!--Import materialize.css-->
         <link type="text/css" rel="stylesheet" href="{% static "css/base.css"%}"/>
-        <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">        <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Comfortaa|Satisfy" rel="stylesheet">
         
         <link type="text/css" rel="stylesheet" href="{% static "css/materialize.css"%}"> 
         <!--Import materialize.js-->
@@ -83,30 +84,30 @@
             </script>    
 
         <nav class="menu" style="overflow: hidden !important;">
-                <div class="nav-wrapper blue-grey darken-2">
+                <div class="nav-wrapper grey darken-4">
                         {% if user.is_authenticated %}
-                            <div class="userEmail right">
+                            <ul id="nav-mobile" class="right hide-on-med-and-down">
                                 {% if request.session|get_value_from_dict:'google-oauth2_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
-                                    <img class="left social-icon"  src="{% static 'img/google_icon.png'%}"/>
+                                    <img class="rs left admin-icon padding-2"  src="{% static 'img/google_icon.png'%}"/>
                                 {% elif request.session|get_value_from_dict:'github_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
-                                    <img class="left social-icon" src="{% static 'img/github_icon.png'%}"/>
+                                    <img class="rs left admin-icon" src="{% static 'img/github_icon.png'%}"/>
                                 {% elif request.session|get_value_from_dict:'facebook_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
-                                    <img class="left social-icon" src="{% static 'img/Facebook.png'%}"/>
+                                    <img class="rs left admin-icon" src="{% static 'img/Facebook.png'%}"/>
                                 {% else %}
                                     <i class="material-icons left">account_circle</i>
                                 {% endif %}
-                                <span class="logged-email">{{ user.email }} | </span>
-                                <a class="right" href="{% url 'logout' %}"><i class="material-icons right">power_settings_new</i></a>
-                            </div>
+                                <li><a href="/profile"><span class="logged-email">{{ user.email }} </span></a></li>
+                                <li><a href="{% url 'logout' %}"><i class="material-icons">power_settings_new</i></a></li>
+                            </ul>
                         {% endif %}
                         {% if user.is_authenticated == False %}
                             <div class="userEmail right">
                                 <ul class="right hide-on-med-and-down">
                                     <li><a href="/form-login?next={{request.path}}">{% trans "Log in"%}</a></li>
                                     <li><a href="/signup/">{% trans "Sign up"%}</a> </li>
-                                    <li><a href="{% url 'social:begin' 'google-oauth2' %}"><img class="admin-icon center" src="{% static 'img/google_icon.png'%}"/></a></li>
-                                    <li><a href="{% url 'social:begin' 'github' %}"><img class="admin-icon" src="{% static 'img/github_icon.png'%}"/></a></li>
-                                    <li><a href="{% url 'social:begin' 'facebook' %}"><img class="admin-icon" src="{% static 'img/Facebook.png'%}"/></a></li>
+                                    <li><a href="{% url 'social:begin' 'google-oauth2' %}"><img height="20px !important" src="{% static 'img/google_icon.png'%}"/></a></li>
+                                    <li><a href="{% url 'social:begin' 'github' %}"><img height="20px !important" src="{% static 'img/github_icon.png'%}"/></a></li>
+                                    <li><a href="{% url 'social:begin' 'facebook' %}"><img height="20px !important" src="{% static 'img/Facebook.png'%}"/></a></li>
                                 </ul>    
                             </div>
                         {% endif %}
@@ -130,9 +131,9 @@
                                     </div>
                                 </form>
                             </li>
-                            <li><a href="#">Link 1</a></li>
-                            <li><a href="#">Link 2</a></li>
-                            <li><a href="#">Link 3</a></li>
+                            <li><a href="/brands"><i class="material-icons">motorcycle</i></a></li>
+                            <li><a href="/census/listCensus">{% trans 'Census' %}</a></li>
+                            <li><a href="/visualizer/list_ended/">{% trans 'Closed Votings' %}</a></li>
 
                             {% endblock %}
                         </ul>
@@ -167,8 +168,9 @@
 
             {% endblock %}
         </div>
+
         <div class="decideFooter">
-            <footer class="page-footer blue-grey darken-2">
+            <footer class="page-footer grey darken-4">
                     <div class="decideFooterContainer container">
                         <span><a class="grey-text text-lighten-4" target="_blank" href="https://github.com/decide-ganimedes/decide-ganimedes">&copy; 2018 Decide-Ganimedes</a> - AGPLv3.0</span>
                         <span> <a class="grey-text text-lighten-4 right" target="_blank" href="https://github.com/decide-ganimedes/decide-ganimedes/releases">vM3-2019</a></span> <span class="right"><a href="/admin"><img src="{% static 'img/django_icon.png'%}" width="25px" height="25px" /></a> </span>

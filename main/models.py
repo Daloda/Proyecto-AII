@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 # Create your models here.
 class Moto(models.Model):
     modelo = models.CharField(_('Model'),max_length=30)
-    fabricante = models.CharField(_('Maker'),max_length=30)
+    fabricante = models.CharField(_('Brands'),max_length=30)
     cilindrada = models.CharField(_('Displacement'),max_length=30)
     potencia_maxima = models.CharField(_('Maximum power'),max_length=30, blank=True)
     periodo_comercializacion = models.CharField(_('Marketing period'),max_length=30, blank=True)

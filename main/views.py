@@ -31,8 +31,14 @@ User=get_user_model()
 def index(request):
     return render(request, "index.html")
 
-def categories(request):
-    return render(request, "categorias.html")
+def Brands(request):
+    return render(request, "marcas.html")
+     
+def Motorcycle(request):
+    return render(request, "moto.html") 
+
+def Profile(request):
+    return render(request, "perfil.html") 
      
 class GetUserView(APIView):
     def post(self, request):

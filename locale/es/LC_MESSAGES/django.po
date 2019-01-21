@@ -162,7 +162,7 @@ msgstr "Por favor, confirme su correo para completar el registro"
 
 #: .\main\templates\index.html:19
 msgid "Welcome"
-msgstr "Bienvenid@"
+msgstr "Bienvenido"
 
 #: .\main\templates\login.html:91
 msgid "Enter an email and a password."

@@ -18,6 +18,10 @@ body{
     margin: auto;
 }
 
+.rs{
+    padding-right: 10px;
+    
+}
 .collapsibleInformation{
     margin-left: 5%;
     display:inline-block;
@@ -39,7 +43,7 @@ nav ul li{
   background-size: 0 5px, auto;
   background-repeat: no-repeat;
   background-position: center bottom;
-  transition: all .2s ease-out !important;
+  transition: all .3s ease-out !important;
 }
 
 nav ul li:hover {
@@ -50,6 +54,12 @@ nav ul li:hover {
 .categorias{
     width: 85%;
     margin: auto;
+}
+
+blockquote{
+    border-left:5px solid #757575 !important;
+    text-align: left !important;
+    font-family: 'Satisfy', cursive !important;
 }
 
 figure img {
@@ -89,6 +99,16 @@ h5, p{
     padding-bottom:20px;
 }
 
+label{
+    color:#7c7c7c !important;
+    font-family: 'Satisfy', cursive !important; 
+    font-size: 1.2em !important;
+}
+
+::placeholder { 
+  font-family: 'Satisfy', cursive !important;
+  opacity: 1 !important; 
+}
 .errorlist
     {
         color: red;
@@ -97,5 +117,63 @@ h5, p{
 /* or if you want to change field border color then */
 .error input, .error select {
 border: 2px red solid;
+}
+
+.rating {
+  width: 208px;
+  height: 40px;
+  margin: 0 auto;
+}
+.rating label {
+  float: right;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+.rating label:not(:first-of-type) {
+  padding-right: 2px;
+}
+.rating label:before {
+  content: "\2605";
+  font-size: 42px;
+  color: #CCCCCC;
+  line-height: 1;
+}
+.rating input {
+  display: none;
+}
+.rating input:checked ~ label:before, .rating:not(:checked) > label:hover:before, .rating:not(:checked) > label:hover ~ label:before {
+  color: #F9DF4A;
+}
+
+.rating .character-counter{
+    display: none !important;
+}
+
+/* profile card */
+#profile-card .card-image {
+  height: 150px;
+}
+
+#profile-card .card-profile-image {
+  left:10%;
+  width: 150px;
+  position: absolute;
+  top: 110px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+#profile-card .btn-move-up {
+  position: relative;
+  top: -40px;
+  right: -18px;
+  margin-right: 10px !important;
+}
+
+#profile-card .card-content p {
+  font-size: 1.2rem;
+  margin: 10px 0 12px;
 }
 
