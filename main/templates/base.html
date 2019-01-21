@@ -18,7 +18,7 @@
 
         <!--Import materialize.css-->
         <link type="text/css" rel="stylesheet" href="{% static "css/base.css"%}"/>
-        <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">        <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Comfortaa|Satisfy" rel="stylesheet">
         
         <link type="text/css" rel="stylesheet" href="{% static "css/materialize.css"%}"> 
@@ -86,19 +86,19 @@
         <nav class="menu" style="overflow: hidden !important;">
                 <div class="nav-wrapper grey darken-4">
                         {% if user.is_authenticated %}
-                            <div class="userEmail right">
+                            <ul id="nav-mobile" class="right hide-on-med-and-down">
                                 {% if request.session|get_value_from_dict:'google-oauth2_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
-                                    <img class="left social-icon"  src="{% static 'img/google_icon.png'%}"/>
+                                    <img class="rs left admin-icon padding-2"  src="{% static 'img/google_icon.png'%}"/>
                                 {% elif request.session|get_value_from_dict:'github_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
-                                    <img class="left social-icon" src="{% static 'img/github_icon.png'%}"/>
+                                    <img class="rs left admin-icon" src="{% static 'img/github_icon.png'%}"/>
                                 {% elif request.session|get_value_from_dict:'facebook_state' != None and request.session|get_value_from_dict:'_auth_user_id' != None %}
-                                    <img class="left social-icon" src="{% static 'img/Facebook.png'%}"/>
+                                    <img class="rs left admin-icon" src="{% static 'img/Facebook.png'%}"/>
                                 {% else %}
                                     <i class="material-icons left">account_circle</i>
                                 {% endif %}
-                                <span class="logged-email">{{ user.email }} | </span>
-                                <a class="right" href="{% url 'logout' %}"><i class="material-icons right">power_settings_new</i></a>
-                            </div>
+                                <li><a href="/profile"><span class="logged-email">{{ user.email }} </span></a></li>
+                                <li><a href="{% url 'logout' %}"><i class="material-icons">power_settings_new</i></a></li>
+                            </ul>
                         {% endif %}
                         {% if user.is_authenticated == False %}
                             <div class="userEmail right">

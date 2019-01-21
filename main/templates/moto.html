@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+{% load custom_tags %}
+  
+{% block content %}
+
+<!-- Para el login con redes sociales, es necesario acceder desde localhost, no 127.0.0.1 -->
+{% if request.build_absolute_uri == "http://127.0.0.1:8000/" %}
+  <script>
+    window.location.replace("http://localhost:8000/motorcycle");
+  </script>
+{% endif %}
+<br>
+<div class="container">
+  <div class="col s12 m7">
+    <div class="card horizontal grey">
+      <div class="card-image">
+        <img src="https://a.mcdn.es/mnet_ft//BMW/C_evolution/32535MG.jpg/660x/">
+      </div>
+      <div class="card-stacked">
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Modelo</span>
+                <blockquote>
+                    <p>Cilindrada: </p>
+                </blockquote>
+                <blockquote>
+                    <p>Fabricante: </p>
+                </blockquote>
+                <blockquote>
+                    <p>Potencia maxima: </p>
+                </blockquote>
+                <blockquote>
+                    <p>Periodo de comercializacion: </p>
+                </blockquote>
+                </div>
+            <div class="card-action">
+                <div class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" /><label class="star" for="star5"></label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label class="star" for="star4"></label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label class="star" for="star3"></label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label class="star" for="star2"></label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label class="star" for="star1"></label>
+                </div>
+            </div>
+        
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.collapsible').collapsible();
+});  
+
+</script>
+
+
+{% endblock %}
