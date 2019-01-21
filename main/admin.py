@@ -1,12 +1,9 @@
 from django.contrib import admin
-from django.contrib.auth import get_user_model 
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
-
-from main.models import Moto, Marca
-
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .forms import UserCreateFormAdmin, UserChangeForm
 
+from django.contrib.auth import get_user_model 
 
 User=get_user_model()
 class UserAdmin(BaseUserAdmin):
@@ -41,4 +38,5 @@ admin.site.unregister(Group)
 
 admin.site.register(Moto)
 admin.site.register(Marca)
+
 
