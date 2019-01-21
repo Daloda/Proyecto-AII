@@ -36,4 +36,7 @@ class UserAdmin(BaseUserAdmin):
 admin.site.register(User, UserAdmin)
 admin.site.unregister(Group)
 
+admin.site.register(Moto)
+admin.site.register(Marca)
+
 
