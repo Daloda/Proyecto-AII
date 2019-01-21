@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from main.views import Profile,Motorcycle,Brands,Activate, obtain_auth_token, obtain_auth_token_rrss, GetUserView, LogoutView, signUp, form_login, index
+from main.views import Profile, Motorcycle, Brands, Activate, obtain_auth_token, obtain_auth_token_rrss, GetUserView, LogoutView, signUp, form_login, index, edit_user
 from django.conf.urls import url, include
 
 urlpatterns = [
@@ -34,5 +34,6 @@ urlpatterns = [
     path('form-login/', form_login),
     url(r'^auth/', include('social_django.urls', namespace='social')),
     path(r'i18n/', include('django.conf.urls.i18n')),
+    path('edit-user/', edit_user),
 ]
 
