@@ -12,7 +12,7 @@ class Marca(models.Model):
     logo = models.CharField(_('Logo'),max_length=100)
     
     def __str__(self):
-        return self.nombre
+        return self.marcaNombre
     
 class Moto(models.Model):
     foto = models.CharField(_('Photo'),max_length=30, null=True)

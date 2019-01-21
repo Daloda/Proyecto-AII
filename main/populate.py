@@ -96,22 +96,23 @@ def cargar_marcas_bd():
 def cargar_motos_bd():
     i = 0;
     caracteristicasTotales = obtener_caracteristicas()
-    for caracteristica in caracteristicasTotales:
-        print(caracteristica)
-        i = i + 1;
-        fotoFinal = caracteristica[0];
-        modeloFinal = caracteristica[1];
-        marcaNombreD = caracteristica[2];
-        cilindradaFinal = caracteristica[3];
-        potencia_maximaFinal = caracteristica[4];
-        periodo_comercializacionFinal = caracteristica[5];
+    try:
+        for caracteristica in caracteristicasTotales:
+            i = i + 1;
+            fotoFinal = caracteristica[0];
+            marcaNombreD = caracteristica[1];
+            modeloFinal = caracteristica[2];
+            cilindradaFinal = caracteristica[3];
+            potencia_maximaFinal = caracteristica[4];
+            periodo_comercializacionFinal = caracteristica[5];
             
-        marcaNombreFinal  = models.Marca.objects.all().get(pk=marcaNombreD)
-    
-        motoSave = models.Moto(foto=fotoFinal, modelo=modeloFinal, marcaNombre = marcaNombreFinal, cilindrada=cilindradaFinal, potencia_maxima=potencia_maximaFinal, periodo_comercializacion=periodo_comercializacionFinal)
-        motoSave.save()
-#     except:
-#         print("Hay un problema con la moto en la posición", i, ". Mensaje de error:", sys.exc_info()[0])
+            res = marcaNombreD.replace(' ','_').lower()
+            marcaNombreFinal  = models.Marca.objects.all().get(pk=res)
+        
+            motoSave = models.Moto(foto=fotoFinal, modelo=modeloFinal, marcaNombre = marcaNombreFinal, cilindrada=cilindradaFinal, potencia_maxima=potencia_maximaFinal, periodo_comercializacion=periodo_comercializacionFinal)
+            motoSave.save()
+    except:
+        print("Hay un problema con la moto en la posición", i, ". Mensaje de error:", sys.exc_info()[0])
 
     print("Se han guardado " + str(i) + " motos en la BD") 
 
@@ -119,5 +120,4 @@ def cargar_motos_bd():
 if __name__ == '__main__':
     cargar_marcas_bd()
     cargar_motos_bd()
-    print(models.Marca.objects.all())
 
