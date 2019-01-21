@@ -4,16 +4,9 @@
   
 {% block content %}
 
-<!-- Para el login con redes sociales, es necesario acceder desde localhost, no 127.0.0.1 -->
-{% if request.build_absolute_uri == "http://127.0.0.1:8000/" %}
-  <script>
-    window.location.replace("http://localhost:8000/categories");
-  </script>
-{% endif %}
-
 {% if user.is_authenticated == False %}
   <script>
-    window.location.replace("http://localhost:8000/form-login/");
+    window.location.replace("/form-login?next={{request.path}}");
   </script>
 {% endif %}
   <br>
