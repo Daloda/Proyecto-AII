@@ -7,20 +7,23 @@ from django.utils.translation import ugettext_lazy as _
 
 
 # Create your models here.
+class Marca(models.Model):
+    marcaNombre = models.CharField(_('Name'),max_length=30, primary_key=True)
+    logo = models.CharField(_('Logo'),max_length=100)
+    
+    def __str__(self):
+        return self.nombre
+    
 class Moto(models.Model):
     foto = models.CharField(_('Photo'),max_length=30, null=True)
     modelo = models.CharField(_('Model'),max_length=30)
+    marcaNombre = models.ForeignKey(Marca,on_delete=models.CASCADE, null=True)
     cilindrada = models.CharField(_('Displacement'),max_length=30)
     potencia_maxima = models.CharField(_('Maximum power'),max_length=30, blank=True)
     periodo_comercializacion = models.CharField(_('Marketing period'),max_length=30, blank=True)
     
     def __str__(self):
         return self.modelo
-
-class Marca(models.Model):
-    nombre = models.CharField(_('Name'),max_length=30)
-    logo = models.CharField(_('Logo'),max_length=100)
-    moto = models.ForeignKey(Moto,on_delete=models.CASCADE)
     
 class User(AbstractBaseUser, PermissionsMixin):
     SEX_OPTIONS = (

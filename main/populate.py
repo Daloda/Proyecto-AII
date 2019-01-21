@@ -1,9 +1,16 @@
 # encoding:utf-8
 from builtins import str
+import os
+import sys
 import urllib.request
 
 from bs4 import BeautifulSoup
+import django
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "AII2Project.settings")
+django.setup()
+
+from main import models
 
 
 # Obtener marcas
@@ -70,39 +77,47 @@ def obtener_caracteristicas():
 
 
 # Cargar datos en BD
-def cargar_bd():
-    i = 0;
-    caracteristicasTotales = obtener_caracteristicas()
+def cargar_marcas_bd():
+    models.Marca.objects.all().delete()
     marcas, urlMarcas = obtener_marcas()
     tamano = len(marcas)
-    for caracteristica in caracteristicasTotales:
-        i = i + 1;
-        urlD = caracteristica[0];
-#       print(urlD)
-        modeloD = caracteristica[1];
-#       print(modeloD)
-#       fabricanteD = caracteristica[2];
-#       print(fabricanteD)
-        cilindradaD = caracteristica[3];
-#       print(cilindradaD)
-        potencia_maximaD = caracteristica[4];
-#       print(potencia_maximaD)
-        periodo_comercializacionD = caracteristica[5];
-#       print(periodo_comercializacionD)
+    try:
+        for x in range(0, tamano):
+            marcaD = marcas[x]
+            urlMarcaD = urlMarcas[x] 
+            marcaSave = models.Marca(marcaNombre=marcaD, logo=urlMarcaD)
+            marcaSave.save()
+    except:
+        print("Hay un problema con la marca en la posición", x, ". Mensaje de error:", sys.exc_info()[0])
+     
+    print("Se han guardado " + str(x) + " marcas en la BD") 
 
-#        motoSave = Moto(foto=urlD, modelo=modeloD, cilindrada=cilindradaD, potencia_maxima=potencia_maximaD, periodo_comercializacion=periodo_comercializacionD)
-#        motoSave.save()
         
-    tamano = len(marcas)
-    for x in range(0, tamano):
-        marcaD = marcas[x]
-        urlMarcaD = urlMarcas[x] 
- #       marcaSave = Marca(nombre=marcaD, logo=urlMarcaD)
-#        marcaSave.save()
+def cargar_motos_bd():
+    i = 0;
+    caracteristicasTotales = obtener_caracteristicas()
+    for caracteristica in caracteristicasTotales:
+        print(caracteristica)
+        i = i + 1;
+        fotoFinal = caracteristica[0];
+        modeloFinal = caracteristica[1];
+        marcaNombreD = caracteristica[2];
+        cilindradaFinal = caracteristica[3];
+        potencia_maximaFinal = caracteristica[4];
+        periodo_comercializacionFinal = caracteristica[5];
+            
+        marcaNombreFinal  = models.Marca.objects.all().get(pk=marcaNombreD)
     
-    print("Se han guardado " + str(i) + " motos en la BD") 
-    print("Se han guardado " + str(x) + " marcas de motos") 
+        motoSave = models.Moto(foto=fotoFinal, modelo=modeloFinal, marcaNombre = marcaNombreFinal, cilindrada=cilindradaFinal, potencia_maxima=potencia_maximaFinal, periodo_comercializacion=periodo_comercializacionFinal)
+        motoSave.save()
+#     except:
+#         print("Hay un problema con la moto en la posición", i, ". Mensaje de error:", sys.exc_info()[0])
 
-    
-print(cargar_bd())
+    print("Se han guardado " + str(i) + " motos en la BD") 
+
+
+if __name__ == '__main__':
+    cargar_marcas_bd()
+    cargar_motos_bd()
+    print(models.Marca.objects.all())
 
