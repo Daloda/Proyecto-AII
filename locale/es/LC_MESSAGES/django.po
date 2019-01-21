@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-20 17:03+0100\n"
+"POT-Creation-Date: 2019-01-21 20:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,82 +18,105 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\AII2Project\settings.py:144
+#: .\AII2Project\settings.py:143
 msgid "English"
 msgstr "English"
 
-#: .\AII2Project\settings.py:145
+#: .\AII2Project\settings.py:144
 msgid "Español"
 msgstr "Español"
 
-#: .\main\forms.py:12 .\main\forms.py:82
+#: .\main\forms.py:12 .\main\forms.py:65 .\main\forms.py:123
 msgid "Man"
 msgstr "Hombre"
 
-#: .\main\forms.py:13 .\main\forms.py:83
+#: .\main\forms.py:13 .\main\forms.py:66 .\main\forms.py:124
 msgid "Woman"
 msgstr "Mujer"
 
-#: .\main\forms.py:14 .\main\forms.py:84
+#: .\main\forms.py:14 .\main\forms.py:67 .\main\forms.py:125
 msgid "Non-binary"
 msgstr "No binario"
 
-#: .\main\forms.py:16 .\main\forms.py:86
+#: .\main\forms.py:16 .\main\forms.py:69 .\main\forms.py:127
 msgid "Format: dd/mm/YYYY"
 msgstr "Formato: dd/mm/YYYY"
 
-#: .\main\forms.py:18 .\main\forms.py:88 .\main\models.py:33
+#: .\main\forms.py:18 .\main\forms.py:71 .\main\forms.py:129
+#: .\main\models.py:33
 msgid "First name"
 msgstr "Nombre"
 
-#: .\main\forms.py:19 .\main\forms.py:89 .\main\models.py:34
+#: .\main\forms.py:19 .\main\forms.py:72 .\main\forms.py:130
+#: .\main\models.py:34
 msgid "Last name"
 msgstr "Apellidos"
 
-#: .\main\forms.py:20 .\main\forms.py:90 .\main\models.py:32
-#: .\main\serializers.py:15 .\main\templates\login.html:37
+#: .\main\forms.py:20 .\main\forms.py:73 .\main\forms.py:131
+#: .\main\models.py:32 .\main\serializers.py:15 .\main\templates\login.html:37
 msgid "Email"
 msgstr "Correo electronico"
 
-#: .\main\forms.py:21 .\main\forms.py:91 .\main\models.py:35
+#: .\main\forms.py:21 .\main\forms.py:74 .\main\forms.py:132
+#: .\main\models.py:35
 msgid "Birthdate"
 msgstr "Fecha de nacimiento"
 
-#: .\main\forms.py:22 .\main\forms.py:92 .\main\models.py:36
+#: .\main\forms.py:22 .\main\forms.py:75 .\main\forms.py:133
+#: .\main\models.py:36
 msgid "City"
 msgstr "Ciudad"
 
-#: .\main\forms.py:23 .\main\forms.py:93 .\main\models.py:37
+#: .\main\forms.py:23 .\main\forms.py:76 .\main\forms.py:134
+#: .\main\models.py:37
 msgid "Sex"
 msgstr "Sexo"
 
-#: .\main\forms.py:53 .\main\forms.py:122
+#: .\main\forms.py:53 .\main\forms.py:163
 msgid "Email alredy exits"
 msgstr "El correo electronico ya existe"
 
-#: .\main\forms.py:61 .\main\forms.py:130
+#: .\main\forms.py:61 .\main\forms.py:171
 msgid "Future date not posible"
 msgstr "Fechas posteriores no validas"
 
+#: .\main\forms.py:78
+#, fuzzy
+#| msgid "Password"
+msgid "Change password"
+msgstr "Contraseña"
+
+#: .\main\forms.py:81
+msgid "Only fill if you want to change your password."
+msgstr "Solo rellenar si desea cambiar su contraseña."
+
+#: .\main\forms.py:85
+msgid "Password confirmation"
+msgstr "Confirme su contraseña"
+
+#: .\main\forms.py:88
+msgid "Enter the same password as before, for verification."
+msgstr "Introduzca la misma contraseña que antes para verificar"
+
 #: .\main\models.py:11
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 #: .\main\models.py:12
-msgid "Maker"
-msgstr ""
+msgid "Brands"
+msgstr "Marcas"
 
 #: .\main\models.py:13
 msgid "Displacement"
-msgstr ""
+msgstr "Cilindrada"
 
 #: .\main\models.py:14
 msgid "Maximum power"
-msgstr ""
+msgstr "Potencia maxima"
 
 #: .\main\models.py:15
 msgid "Marketing period"
-msgstr ""
+msgstr "Periodo de comercializacion"
 
 #: .\main\models.py:40
 msgid "Is active"
@@ -147,20 +170,28 @@ msgstr ""
 msgid "Go to login"
 msgstr "Iniciar sesion"
 
-#: .\main\templates\base.html:105 .\main\templates\login.html:25
+#: .\main\templates\base.html:106 .\main\templates\login.html:25
 #: .\main\templates\login.html:50
 msgid "Log in"
 msgstr "Iniciar sesion"
 
-#: .\main\templates\base.html:106
+#: .\main\templates\base.html:107
 msgid "Sign up"
 msgstr "Registrarse"
+
+#: .\main\templates\base.html:135
+msgid "Census"
+msgstr ""
+
+#: .\main\templates\base.html:136
+msgid "Closed Votings"
+msgstr ""
 
 #: .\main\templates\confirm_email.html:7
 msgid "Please confirm your email address to complete the registration"
 msgstr "Por favor, confirme su correo para completar el registro"
 
-#: .\main\templates\index.html:19
+#: .\main\templates\index.html:23
 msgid "Welcome"
 msgstr "Bienvenido"
 
@@ -176,11 +207,15 @@ msgstr "Error: Las credenciales no son correctas"
 msgid "Error: "
 msgstr "Error: "
 
-#: .\main\templates\signup.html:13
+#: .\main\templates\signup.html:8
+msgid "Edit your data"
+msgstr "Edite sus datos"
+
+#: .\main\templates\signup.html:12
 msgid "Sign up a new user"
 msgstr "Registrar nuevo usuario"
 
-#: .\main\templates\signup.html:21
+#: .\main\templates\signup.html:23
 msgid "Submit"
 msgstr "Enviar"
 
