@@ -39,7 +39,7 @@ nav ul li{
   background-size: 0 5px, auto;
   background-repeat: no-repeat;
   background-position: center bottom;
-  transition: all .2s ease-out !important;
+  transition: all .3s ease-out !important;
 }
 
 nav ul li:hover {
@@ -89,6 +89,16 @@ h5, p{
     padding-bottom:20px;
 }
 
+label{
+    color:#7c7c7c !important;
+    font-family: 'Satisfy', cursive !important; 
+    font-size: 1.2em !important;
+}
+
+::placeholder { 
+  font-family: 'Satisfy', cursive !important;
+  opacity: 1 !important; 
+}
 .errorlist
     {
         color: red;

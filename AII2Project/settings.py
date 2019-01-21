@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'nocaptcha_recaptcha',
-
     'corsheaders',
     'django_filters',
     'rest_framework',
