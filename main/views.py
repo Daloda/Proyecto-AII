@@ -1,53 +1,74 @@
-from rest_framework.authtoken.models import Token
-from django.shortcuts import get_object_or_404, render
-from django.core.exceptions import ObjectDoesNotExist
- 
-from .serializers import UserSerializer
-from django.http import HttpResponseRedirect
- 
-from .forms import UserCreateForm, UserEditForm
-from django.contrib.auth import logout, login, update_session_auth_hash
- 
-from rest_framework import parsers, renderers
-from .serializers import AuthTokenSerializer
-from rest_framework.compat import coreapi, coreschema
-from rest_framework.response import Response
-from .schemas.inspectors import ManualSchema
-from rest_framework.views import APIView
- 
+from urllib.request import HTTPRedirectHandler
+
 from django.contrib.auth import get_user_model
- 
+from django.contrib.auth import logout, login, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage
 from django.http import HttpResponse 
-from django.contrib.auth.forms import PasswordChangeForm
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from rest_framework import parsers, renderers
+from rest_framework.authtoken.models import Token
+from rest_framework.compat import coreapi, coreschema
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from main.models import Marca, Moto
+
+from .forms import UserCreateForm, UserEditForm
+from .schemas.inspectors import ManualSchema
+from .serializers import AuthTokenSerializer
+from .serializers import UserSerializer
 from .tokens import account_activation_token
-from urllib.request import HTTPRedirectHandler
- 
- 
-User=get_user_model()
+
+User = get_user_model()
+
 
 def index(request):
     return render(request, "index.html")
 
+
 def Brands(request):
-    return render(request, "marcas.html")
+    marcas = Marca.objects.all()
+    return render(request, 'marcas.html', {'marcas':marcas})
+
      
+def Models(request, nombreMarcaURL):
+    modelos = []
+    modelosTotales = Moto.objects.all()
+    for moto in modelosTotales:
+        print(moto.marcaNombre)
+        print("d "+nombreMarcaURL)
+        if (str(moto.marcaNombre) == str(nombreMarcaURL)):
+            modelos.append(moto)
+    
+    print(modelos)        
+    return render(request, 'modelos.html', {'modelos':modelos})
+
+
 def Motorcycle(request):
-    return render(request, "moto.html") 
+    modelo = Moto.objects.all()
+    return render(request, 'modelos.html', {'modelos':modelo})
+
 
 def Profile(request):
     return render(request, "perfil.html") 
+
      
 class GetUserView(APIView):
+
     def post(self, request):
         key = request.data.get('token', '')
         tk = get_object_or_404(Token, key=key)
         return Response(UserSerializer(tk.user, many=False).data)
+
  
 class LogoutView(APIView):
+
     def post(self, request):
         key = request.data.get('token', '')
         try:
@@ -58,6 +79,7 @@ class LogoutView(APIView):
             pass
  
         return Response({})
+
  
 class ObtainAuthToken(APIView):
     throttle_classes = ()
@@ -98,8 +120,10 @@ class ObtainAuthToken(APIView):
         token, created = Token.objects.get_or_create(user=user)
         login(request, user)
         return Response({'token': token.key})
+
  
 class ObtainAuthTokenRRSS(APIView):  
+
     def get(self, request, *args, **kwarsg):
         if(((request.session.has_key('google-oauth2_state')) or 
             (request.session.has_key('github_state')) or 
@@ -109,16 +133,18 @@ class ObtainAuthTokenRRSS(APIView):
             token, created = Token.objects.get_or_create(user=user)
             request.session['auth-token'] = token.key
         return HttpResponseRedirect(request.GET.get('next', '/'))
+
  
 obtain_auth_token_rrss = ObtainAuthTokenRRSS.as_view()
  
 obtain_auth_token = ObtainAuthToken.as_view()
+
  
 def signUp(request):
     if request.method == 'POST':
         formulario = UserCreateForm(request.POST)
         if formulario.is_valid():
-            user=formulario.save(commit=False)
+            user = formulario.save(commit=False)
             user.is_active = False
             user.save()
  
@@ -139,19 +165,22 @@ def signUp(request):
         formulario = UserCreateForm()
     return render(request, 'signup.html', {'formulario':formulario})
 
+
 def edit_user(request):
     if request.method == 'POST':
         formulario = UserEditForm(request.POST, instance=request.user)
         if formulario.is_valid():
-            user=formulario.save(commit=False)
+            user = formulario.save(commit=False)
             user.save()
             update_session_auth_hash(request, user)
             return render(request, 'index.html')
     else:
         formulario = UserEditForm(instance=request.user)
     return render(request, 'signup.html', {'formulario': formulario })
+
  
 class Activate(APIView):
+
     def get(self, request):
         uidb64 = request.GET.get('uid')
         token = request.GET.get('token')
@@ -173,8 +202,9 @@ class Activate(APIView):
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user) # Important, to update the session with the new password
+            update_session_auth_hash(request, user)  # Important, to update the session with the new password
             return HttpResponse('Password changed successfully')
+
              
 def form_login(request):
     return render(request, 'login.html')
