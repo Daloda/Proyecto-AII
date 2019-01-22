@@ -45,7 +45,7 @@ def Brands(request):
             with ix.searcher() as searcher:
                 query = MultifieldParser(["modelo","marcaNombre"], ix.schema, group = qparser.AndGroup).parse(str(inputData))
                 results = searcher.search(query, limit=None)
-                return render(request, "modelos.html", {"modelos": results})
+                return render(request, "modelos.html", {"form": form,"modelos": results})
     marcas = Marca.objects.all()
     form=SearchForm()
     return render(request, "marcas.html", {"form": form, "marcas": marcas})
@@ -64,7 +64,7 @@ def Models(request, nombreMarcaURL):
                 for result in results:
                     if (str(result.get("marcaNombre")) == str(nombreMarcaURL)):
                         modelos.append(result)
-                return render(request, "modelos.html", {"modelos": modelos})
+                return render(request, "modelos.html", {"form": form,"modelos": modelos})
             
     modelos = []
     modelosTotales = Moto.objects.all()

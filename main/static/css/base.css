@@ -62,14 +62,16 @@ blockquote{
     font-family: 'Satisfy', cursive !important;
 }
 
-figure img {
+.modelo-img{
+    border:5px solid #70707099;
 	-webkit-filter: grayscale(0) blur(0);
 	filter: grayscale(0) blur(0);
 	-webkit-transition: .3s ease-in-out;
 	transition: .3s ease-in-out !important;
 }
 
-figure:hover img {
+.modelo-img:hover{
+    border:5px solid #70707099;
 	-webkit-filter: grayscale(100%) blur(3px);
 	filter: grayscale(100%) blur(3px);
 }
@@ -103,6 +105,10 @@ label{
     color:#7c7c7c !important;
     font-family: 'Satisfy', cursive !important; 
     font-size: 1.2em !important;
+}
+
+.myField{
+    text-align: center
 }
 
 ::placeholder { 

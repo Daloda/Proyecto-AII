@@ -171,4 +171,4 @@ class UserCreateFormAdmin(UserCreationForm):
                 self.add_error('birthdate', _('Future date not posible'))
                 
 class SearchForm(forms.Form):
-    inputData = forms.CharField(label='Busca una moto')
+    inputData = forms.CharField(label='',widget=forms.TextInput(attrs={'type' : 'search', 'class':'myField', 'placeholder':'Busca una moto'}))

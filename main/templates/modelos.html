@@ -6,22 +6,13 @@
 <br>
 <div class="search-bikes row">
 	<div class="col s6 offset-s3">
-		<nav>
-			<div class="nav-wrapper grey">
-				<form>
-					<div class="input-field">
-						<input id="search" type="search"
-							placeholder="Busca una moto"> <label class="label-icon"
-							for="search"><i class="material-icons">search</i></label> <i
-							class="material-icons">close</i>
-						<form id='form' method='get' action=''>
-							{{form.as_p}}
-							<p><input type='submit' value='Confirm'/></p>
-						</form>
-					</div>
-				</form>
-			</div>
-		</nav>
+        <form id='form' method='get' action=''>
+            <nav>
+			    <div class="nav-wrapper grey">
+                        {{form.as_p}}
+			    </div>
+            </nav>
+        </form>
 	</div>
 </div>
 
@@ -31,15 +22,12 @@
         	{% if modelos %} 
 				{% for modelo in modelos %}
 					<div class="categoria col s12 m6 l4">
-						<a href="#">
-							<figure>
 								<p>{{modelo.modelo}}</p>
-								<a href="http://localhost:8000/motorcycle/{{modelo.id}}" ><img src="{{modelo.foto}}" class="materialbox responsive-img card" /></a>
-							</figure>
-						</a>
+								<a href="http://localhost:8000/motorcycle/{{modelo.id}}" ><img height="300 !important" width="350" src="{{modelo.foto}}" class="modelo-img materialbox" /></a>
 					</div>
 				{% endfor %} 
-			{% else %}
+            {% else %}
+                <br>
 				<p>No hay modelos disponibles de esa marca</p>
 			{% endif %}
     	</div>
