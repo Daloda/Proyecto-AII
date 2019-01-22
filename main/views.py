@@ -12,6 +12,7 @@ from .forms import UserCreateForm, UserEditForm, SearchForm
 from django.shortcuts import get_object_or_404, render
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import parsers, renderers
 from rest_framework.authtoken.models import Token
@@ -83,13 +84,20 @@ def Models(request, nombreMarcaURL):
     return render(request, 'modelos.html', {"form": form,'modelos':modelos})
 
 
-def Motorcycle(request,idMoto):
+def Motorcycle(request, idMoto):
     motoSalida = None
+    added = False
     modelosTotales = Moto.objects.all()
     for moto in modelosTotales:
         if (str(moto.id) == str(idMoto)):
-            motoSalida = moto            
-    return render(request, 'moto.html', {'moto': motoSalida})
+            motoSalida = moto
+    if (request.session.has_key('_auth_user_id')):
+        uid = request.session.get('_auth_user_id')
+        userMot = models.User.objects.get(pk=uid)
+        motos = userMot.moto.all()
+        if motoSalida in motos:
+            added = True            
+    return render(request, 'moto.html', {'moto': motoSalida, 'added': added})
 
 
 def Profile(request):
@@ -98,6 +106,25 @@ def Profile(request):
 def Users(request):
     usuarios = User.objects.all()
     return render(request, "usuarios.html", {"usuarios": usuarios})
+
+def add_moto(request, motoId):
+    if (request.session.has_key('_auth_user_id')):
+        uid = request.session.get('_auth_user_id')
+        token = request.session.get('auth-token')
+        user = post(entry_point='/getuser/', json={'token': token})
+        user_id = user.get('id', None)
+        if not user_id or str(user_id) != str(uid):
+            return Response(
+                {"message": "voter id is not authorized"},
+                status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            userMot = models.User.objects.get(pk=user_id)
+            mot = Moto.objects.get(pk=motoId)
+            userMot.moto.add(mot)
+            userMot.save()
+            update_session_auth_hash(request, user)
+            return render(request, "moto.html", {'moto': mot, 'added': True, 'mensaje': _('Bike added correctly')})
+    return render(request, "moto.html", {'moto': mot})
 
 def Ratings(request, motoId, value):
     if (request.session.has_key('_auth_user_id')):
@@ -114,6 +141,7 @@ def Ratings(request, motoId, value):
             mot = Moto.objects.get(pk=motoId)
             rat = Rating(usuario=userRat, moto=mot, rating=int(value))
             rat.save()
+            return render(request, "moto.html", {'moto': mot, 'mensaje': _('Bike rated correctly')})
     return render(request, "moto.html", {'moto': mot})
 
 

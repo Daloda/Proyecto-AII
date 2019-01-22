@@ -31,7 +31,10 @@
                         <p>
                           <i class="material-icons">location_city</i> {{user.city}}</p>
                         <p>
-                          <i class="material-icons">motorcycle</i> {{user.moto.modelo}}</p>
+	            			{% for moto in user.moto.all %}
+	            				<a href="localhost:8000/motorcycle/{{moto.id}}"><i class="material-icons">motorcycle</i>{{moto.modelo}}</a>
+	            			{% endfor %}
+            			</p>
                       </div>
                       <div class="card-reveal" style="display: none; transform: translateY(0px);">
                         <span class="card-title grey-text text-darken-4"> {{user.first_name}} {{user.last_name}}

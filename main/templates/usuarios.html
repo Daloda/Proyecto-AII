@@ -21,8 +21,16 @@
 		              					<img src="{{usuario.urlFoto}}" class="circle responsive-img card-users-image cyan lighten-1 padding-2"> 
 		              				{% endif %}
 		              			</a>
-		            			<a href="/profile?userId='{{usuario.id}}'">{{usuario.first_name}} {{usuario.last_name}}</a>
-		            			<p><i class="material-icons">motorcycle</i>{{usuario.moto.model}}</p>
+		              			{% if usuario.first_name is not None %}
+		            				<a href="/profile?userId='{{usuario.id}}'">{{usuario.first_name}} {{usuario.last_name}} ({{usuario.email}})</a>
+		            			{% else %}
+		            				<a href="/profile?userId='{{usuario.id}}'">{{usuario.email}}</a>
+		            			{% endif %}
+		            			<p>
+		            			{% for moto in usuario.moto.all %}
+		            				<a href="localhost:8000/motorcycle/{{moto.id}}"><i class="material-icons">motorcycle</i>{{moto.modelo}}</a>
+		            			{% endfor %}
+		            			</p>
 			          		</div>
 			        	</div>
 			      	</div>

@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
-from main.views import Users,Profile,Motorcycle,Brands,Activate, obtain_auth_token, obtain_auth_token_rrss, GetUserView, LogoutView, signUp, form_login, index,edit_user, Models, Ratings, recommendedMotos
+from main.views import Users,Profile,Motorcycle,Brands,Activate, obtain_auth_token, obtain_auth_token_rrss, GetUserView, LogoutView, signUp, form_login, index,edit_user, Models, Ratings, recommendedMotos, add_moto
 
 
 urlpatterns = [
@@ -39,6 +39,7 @@ urlpatterns = [
     path(r'i18n/', include('django.conf.urls.i18n')),
     path('edit-user/', edit_user),
     path('rating/<motoId>/<value>', Ratings, name="Ratings"),
-    path('recommendedMotos/', recommendedMotos, name="recommendedMotos"),   
+    path('recommendedMotos/', recommendedMotos, name="recommendedMotos"),
+    path('add-moto/<motoId>', add_moto, name="add_moto"),    
 ]
 
