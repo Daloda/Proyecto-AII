@@ -235,7 +235,6 @@ def loadDict():
         Prefs.setdefault(user, {})
         Prefs[user][itemid] = rating
     shelf['Prefs']=Prefs
-    print(Prefs)
     shelf['ItemsPrefs']=transformPrefs(Prefs)
     shelf['SimItems']=calculateSimilarItems(Prefs, n=10)
     shelf.close()
