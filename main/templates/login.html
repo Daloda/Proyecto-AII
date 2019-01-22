@@ -2,7 +2,6 @@
 {% load i18n static %}
 {% load custom_tags %}
 {% block extrahead %}
-    <link type="text/css" rel="stylesheet" href="{% static "decide/css/booth/booth.css"%}"/>
     <style type="text/css">
         h3 {text-align: center;}
         .social-login {
@@ -47,7 +46,7 @@
                 <div class="col m2"></div>
             </div>
             <div class="row">
-                <button class="btn waves-effect waves-light" style="background-color: #455a64 !important;" onClick="decideLogin()" type="submit" name="action">{% trans "Log in" %}
+                <button class="btn waves-effect waves-light" style="background-color: #455a64 !important;" onClick="login()" type="submit" name="action">{% trans "Log in" %}
                     <i class="material-icons right">send</i>
                 </button>
             </div>
@@ -80,7 +79,7 @@
                 }
             });
         }
-        function decideLogin() {
+        function login() {
             
             var data = {
                     email: document.querySelector("#email").value,
@@ -92,9 +91,6 @@
             } else {
                 postData("{{auth_url}}" +  "/login/", data)
                 .then(data => {
-                    // document.cookie = 'decide='+'{{ request.session|get_value_from_dict:"auth-token" }}'+';';
-                    // token = data.token;
-                    // decideUser();
                     var next = getParameterByName('next');
                     window.location.replace(next);
                 })

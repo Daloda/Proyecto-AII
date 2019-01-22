@@ -26,7 +26,7 @@
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="utf-8" />
-        <title>{% block title %}Decide!{% endblock %}</title>
+        <title>{% block title %}The Customs{% endblock %}</title>
         <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png'%}"/>
         <style type="text/css"> 
             .social-icon {
@@ -111,7 +111,7 @@
                                 </ul>    
                             </div>
                         {% endif %}
-                        <a href="/" class="brand-logo center">Ganimedes<i class="material-icons right">data_usage</i></a>
+                        <a href="/" class="brand-logo center">The Customs<i class="material-icons right">data_usage</i></a>
                         <ul id="nav-mobile" class="left hide-on-med-and-down">
                             {% block menu_options %}
                             <li>
@@ -133,7 +133,7 @@
                             </li>
                             <li><a href="/brands"><i class="material-icons">motorcycle</i></a></li>
                             <li><a href="/users"><i class="material-icons">account_circle</i></a></li>
-                            <li><a href="/visualizer/list_ended/">{% trans 'Closed Votings' %}</a></li>
+                            <li><a href="/recommendedMotos"><i class="material-icons">account_circle</i></a></li>
 
                             {% endblock %}
                         </ul>
@@ -169,12 +169,11 @@
             {% endblock %}
         </div>
 
-        <div class="decideFooter">
+        <div class="myFooter">
             <footer class="page-footer grey darken-4">
-                    <div class="decideFooterContainer container">
-                        <span><a class="grey-text text-lighten-4" target="_blank" href="https://github.com/decide-ganimedes/decide-ganimedes">&copy; 2018 Decide-Ganimedes</a> - AGPLv3.0</span>
-                        <span> <a class="grey-text text-lighten-4 right" target="_blank" href="https://github.com/decide-ganimedes/decide-ganimedes/releases">vM3-2019</a></span> <span class="right"><a href="/admin"><img src="{% static 'img/django_icon.png'%}" width="25px" height="25px" /></a> </span>
-                      
+                    <div class="myFooterContainer container">
+                        <span class="grey-text text-lighten-4">&copy; 2019 DALODA - AGPLv3.0</span>
+                        <span class="grey-text text-lighten-4 right">vM3-2019</span> <span class="right"><a href="/admin"><img src="{% static 'img/django_icon.png'%}" width="25px" height="25px" /></a> </span>
                 </div>
             </footer> 
         </div>  

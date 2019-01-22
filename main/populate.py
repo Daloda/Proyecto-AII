@@ -10,11 +10,14 @@ from whoosh import qparser
 from whoosh.fields import Schema, TEXT
 from whoosh.index import create_in, open_dir
 from whoosh.qparser.default import MultifieldParser
+import shelve
+from main.recommendations import  transformPrefs, calculateSimilarItems
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "AII2Project.settings")
 django.setup()
 
 from main import models
+
 
 
 # Obtener marcas
@@ -219,6 +222,22 @@ def buscarModelo():
     lb = Listbox(v, yscrollcommand=sc.set)
     lb.pack(side=BOTTOM, fill=BOTH)
     sc.config(command=lb.yview)
+    
+
+def loadDict():
+    Prefs={}
+    shelf = shelve.open("dataRS.dat")
+    ratings = models.Rating.objects.all()
+    for ra in ratings:
+        user = int(ra.usuario.id)
+        itemid = int(ra.moto.id)
+        rating = float(ra.rating)
+        Prefs.setdefault(user, {})
+        Prefs[user][itemid] = rating
+    shelf['Prefs']=Prefs
+    shelf['ItemsPrefs']=transformPrefs(Prefs)
+    shelf['SimItems']=calculateSimilarItems(Prefs, n=10)
+    shelf.close()
             
 
 root = Tk()
@@ -232,11 +251,15 @@ find2menu = Menu(menubar, tearoff=0)
 find2menu.add_command(label="Indexar", command=indexar)
 find2menu.add_command(label="Busqueda por marca o modelo", command=buscarModelo)
 menubar.add_cascade(label="Indices", menu=find2menu);
-find3menu = Menu(menubar, tearoff=0)
 
+find3menu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Cargar BD", menu=find3menu);
 find3menu.add_command(label="Cargar Marcas", command=cargar_marcas_bd)
 find3menu.add_command(label="Cargar Motos", command=cargar_motos_bd)
+
+find4menu = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="SR", menu=find4menu);
+find4menu.add_command(label="Cargar SR", command=loadDict)
 
 root.config(menu=menubar)
 root.mainloop()

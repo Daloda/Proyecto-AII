@@ -18,18 +18,24 @@ from rest_framework.authtoken.models import Token
 from rest_framework.compat import coreapi, coreschema
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import status
 
-from main.models import Marca, Moto, User
+from main.models import Marca, Moto, User, Rating
+from main import models
 
 from .schemas.inspectors import ManualSchema
 from .serializers import AuthTokenSerializer
 from .serializers import UserSerializer
 from .tokens import account_activation_token
+from .mods import post
 
 from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser
 from whoosh import qparser
 from AII2Project.settings import INDEX_PATH
+
+import shelve
+from main.recommendations import  transformPrefs, calculateSimilarItems, getRecommendedItems, topMatches
 
  
 def index(request):
@@ -45,7 +51,7 @@ def Brands(request):
             with ix.searcher() as searcher:
                 query = MultifieldParser(["modelo","marcaNombre"], ix.schema, group = qparser.AndGroup).parse(str(inputData))
                 results = searcher.search(query, limit=None)
-                return render(request, "modelos.html", {"modelos": results})
+                return render(request, "modelos.html", {"form": form, "modelos": results})
     marcas = Marca.objects.all()
     form=SearchForm()
     return render(request, "marcas.html", {"form": form, "marcas": marcas})
@@ -64,7 +70,7 @@ def Models(request, nombreMarcaURL):
                 for result in results:
                     if (str(result.get("marcaNombre")) == str(nombreMarcaURL)):
                         modelos.append(result)
-                return render(request, "modelos.html", {"modelos": modelos})
+                return render(request, "modelos.html", {"form": form, "modelos": modelos})
             
     modelos = []
     modelosTotales = Moto.objects.all()
@@ -91,6 +97,42 @@ def Profile(request):
 def Users(request):
     usuarios = User.objects.all()
     return render(request, "usuarios.html", {"usuarios": usuarios})
+
+def Ratings(request, motoId, value):
+    if (request.session.has_key('_auth_user_id')):
+        uid = request.session.get('_auth_user_id')
+        token = request.session.get('auth-token')
+        user = post(entry_point='/getuser/', json={'token': token})
+        user_id = user.get('id', None)
+        if not user_id or str(user_id) != str(uid):
+            return Response(
+                {"message": "voter id is not authorized"},
+                status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            userRat = models.User.objects.get(pk=user_id)
+            mot = Moto.objects.get(pk=motoId)
+            rat = Rating(usuario=userRat, moto=mot, rating=int(value))
+            rat.save()
+    return render(request, "moto.html", {'moto': mot})
+
+
+def recommendedMotos(request):
+    if (request.session.has_key('_auth_user_id')):
+        idUser = request.session.get('_auth_user_id')
+#         user = models.User.objects.get(pk=idUser)
+        shelf = shelve.open("dataRS.dat")
+        Prefs = shelf['Prefs']
+        SimItems = shelf['SimItems']
+        shelf.close()
+        rankings = getRecommendedItems(Prefs, SimItems, int(idUser))
+        recommended = rankings[:3]
+        items = []
+        for re in recommended:
+            item = Moto.objects.get(pk=re[1])
+            items.append(item)
+        return render(request,'modelos.html', {'modelos': items, 'recommend': True})
+    else:
+        return render(request, "index.html")
 
 
 User=get_user_model()

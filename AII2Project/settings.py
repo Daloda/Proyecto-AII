@@ -166,8 +166,8 @@ STATIC_URL = '/static/'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'aii.project.grupo2@gmail.com'
-EMAIL_HOST_PASSWORD = 'practica1819'
+EMAIL_HOST_USER = 'decideganimedes@gmail.com'
+EMAIL_HOST_PASSWORD = 'decide18-19'
 EMAIL_PORT = 587
 
 LOGIN_REDIRECT_URL = '/obtain_auth_token_rrss/'

@@ -28,11 +28,11 @@
                 </div>
             <div class="card-action">
                 <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" /><label class="star" for="star5"></label>
-                    <input type="radio" id="star4" name="rating" value="4" /><label class="star" for="star4"></label>
-                    <input type="radio" id="star3" name="rating" value="3" /><label class="star" for="star3"></label>
-                    <input type="radio" id="star2" name="rating" value="2" /><label class="star" for="star2"></label>
-                    <input type="radio" id="star1" name="rating" value="1" /><label class="star" for="star1"></label>
+                    <input type="radio" id="star5" name="rating" value="5" onclick="window.location.replace('http://localhost:8000/rating/{{moto.id}}/5');" /><label class="star" for="star5"></label>
+                    <input type="radio" id="star4" name="rating" value="4" onclick="window.location.replace('http://localhost:8000/rating/{{moto.id}}/4');" /><label class="star" for="star4"></label>
+                    <input type="radio" id="star3" name="rating" value="3" onclick="window.location.replace('http://localhost:8000/rating/{{moto.id}}/3');" /><label class="star" for="star3"></label>
+                    <input type="radio" id="star2" name="rating" value="2" onclick="window.location.replace('http://localhost:8000/rating/{{moto.id}}/2');" /><label class="star" for="star2"></label>
+                    <input type="radio" id="star1" name="rating" value="1" onclick="window.location.replace('http://localhost:8000/rating/{{moto.id}}/1');" /><label class="star" for="star1"></label>
                 </div>
             </div>
         

@@ -13,19 +13,26 @@ class UserCreateForm(UserCreationForm):
         ('W', _('Woman')),
         ('N', _('Non-binary')),
     )
+    ROL_OPTIONS = (
+        ('D', 'Deportivo'),
+        ('A','Aventurero'),
+        ('R','Rutero'),
+    )
     aux=_("Format: dd/mm/YYYY"),
   
     first_name = forms.CharField(label=_('First name'),required=False)
     last_name = forms.CharField(label=_('Last name'),required=False)
     email = forms.EmailField(label=_('Email'),required=True)
-    birthdate = forms.DateField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
+    birthdate = forms.DateTimeField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
     city = forms.CharField(label=_('City'),required=True)
     sex = forms.ChoiceField(label=_('Sex'),choices=SEX_OPTIONS, required=False)
+    rol = forms.ChoiceField(label=_('Role'),choices=ROL_OPTIONS, required=False)
+    urlFoto = forms.URLField(label=_("Photo's URL"), required=False)
     captcha = NoReCaptchaField()
   
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "email", "birthdate", "city", "sex", "password1", "password2", "captcha")
+        fields = ("first_name", "last_name", "email", "birthdate", "city", "sex", "rol", "urlFoto", "password1", "password2", "captcha")
       
     def save(self, commit=True):
         user = super(UserCreateForm, self).save(commit=False)
@@ -35,6 +42,8 @@ class UserCreateForm(UserCreationForm):
         user.birthdate = self.cleaned_data["birthdate"]
         user.city = self.cleaned_data["city"]
         user.sex = self.cleaned_data["sex"]
+        user.rol = self.cleaned_data["rol"]
+        user.urlFoto = self.cleaned_data["urlFoto"]
   
         if commit:
             user.save()
@@ -66,6 +75,11 @@ class UserEditForm(UserCreationForm):
         ('W', _('Woman')),
         ('N', _('Non-binary')),
     )
+    ROL_OPTIONS = (
+        ('D', 'Deportivo'),
+        ('A','Aventurero'),
+        ('R','Rutero'),
+    )
     aux=_("Format: dd/mm/YYYY"),
   
     first_name = forms.CharField(label=_('First name'),required=False)
@@ -74,6 +88,8 @@ class UserEditForm(UserCreationForm):
     birthdate = forms.DateField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
     city = forms.CharField(label=_('City'),required=True)
     sex = forms.ChoiceField(label=_('Sex'),choices=SEX_OPTIONS, required=False)
+    rol = forms.ChoiceField(label=_('Rol'),choices=ROL_OPTIONS, required=False)
+    urlFoto = forms.URLField(label=_("Photo's URL"), required=False)
     password1 = forms.CharField(
         label=_("Change password"),
         strip=False,
@@ -91,7 +107,7 @@ class UserEditForm(UserCreationForm):
   
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "email", "birthdate", "city", "sex", "password1", "password2")
+        fields = ("first_name", "last_name", "email", "birthdate", "city", "sex", "rol", "urlFoto", "password1", "password2")
       
     def save(self, commit=True):
         user = super(UserEditForm, self).save(commit=False)
@@ -101,6 +117,8 @@ class UserEditForm(UserCreationForm):
         user.birthdate = self.cleaned_data["birthdate"]
         user.city = self.cleaned_data["city"]
         user.sex = self.cleaned_data["sex"]
+        user.rol = self.cleaned_data["rol"]
+        user.urlFoto = self.cleaned_data["urlFoto"]
   
         if commit:
             user.save()
@@ -124,6 +142,11 @@ class UserCreateFormAdmin(UserCreationForm):
         ('W', _('Woman')),
         ('N', _('Non-binary')),
     )
+    ROL_OPTIONS = (
+        ('D', 'Deportivo'),
+        ('A','Aventurero'),
+        ('R','Rutero'),
+    )
     aux=_("Format: dd/mm/YYYY"),
   
     first_name = forms.CharField(label=_('First name'),required=False)
@@ -132,10 +155,12 @@ class UserCreateFormAdmin(UserCreationForm):
     birthdate = forms.DateField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
     city = forms.CharField(label=_('City'),required=True)
     sex = forms.ChoiceField(label=_('Sex'),choices=SEX_OPTIONS, required=False)
+    rol = forms.ChoiceField(label=_('Rol'),choices=ROL_OPTIONS, required=False)
+    urlFoto = forms.URLField(label=_("Photo's URL"), required=False)
   
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "email", "birthdate", "city", "sex", "password1", "password2")
+        fields = ("first_name", "last_name", "email", "birthdate", "city", "sex", "rol", "urlFoto", "password1", "password2")
       
     def save(self, commit=True):
         user = super(UserCreateFormAdmin, self).save(commit=False)
@@ -145,6 +170,8 @@ class UserCreateFormAdmin(UserCreationForm):
         user.birthdate = self.cleaned_data["birthdate"]
         user.city = self.cleaned_data["city"]
         user.sex = self.cleaned_data["sex"]
+        user.rol = self.cleaned_data["rol"]
+        user.urlFoto = self.cleaned_data["urlFoto"]
   
         if commit:
             user.save()

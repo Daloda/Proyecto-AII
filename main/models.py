@@ -4,6 +4,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from .managers import UserManager
 from datetime import date
 from django.utils.translation import ugettext_lazy as _
+from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
 
 
 # Create your models here.
@@ -48,6 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     moto=models.ManyToManyField(Moto)
     is_active = models.BooleanField(_('Is active'),default=True)
     is_staff = models.BooleanField(_('Is staf'),default=False)
+    urlFoto = models.URLField(validators=[URLValidator()], null=True)
 
     objects = UserManager()
 
@@ -70,5 +72,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         today = date.today()
         age = today - self.birthdate
         return age.year
+    
+class Rating(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    moto = models.ForeignKey(Moto, on_delete=models.CASCADE)
+    rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    
+    def __str__(self):
+        return str(self.rating)
     
     
