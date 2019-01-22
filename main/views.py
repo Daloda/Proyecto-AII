@@ -58,7 +58,9 @@ def Motorcycle(request):
 def Profile(request):
     return render(request, "perfil.html") 
 
-     
+def Users(request):
+    return render(request, "usuarios.html") 
+
 class GetUserView(APIView):
 
     def post(self, request):
@@ -154,7 +156,7 @@ def signUp(request):
             uid = urlsafe_base64_encode(force_bytes(user.pk)).decode()
             token = account_activation_token.make_token(user)
             activation_link = "http://{0}/activate/?uid={1}&token={2}".format(current_site, uid, token)
-            message = "Thanks you for joining,\n You need to check this link to activate your account:\n {0} \n Best regards. \n Ganimedes team.".format(activation_link)
+            message = "Thanks you for joining,\n You need to check this link to activate your account:\n {0} \n Best regards. \n Group 2 team.".format(activation_link)
              
             to_email = formulario.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
