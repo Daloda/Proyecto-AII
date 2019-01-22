@@ -24,7 +24,7 @@ urlpatterns = [
     path('', index, name="index"),
     path('brands/', Brands, name="Brands"),
     path('models/<nombreMarcaURL>', Models, name="Models"),
-    path('motorcycle/',Motorcycle, name="Motorcycle"),
+    path('motorcycle/<idMoto>',Motorcycle, name="Motorcycle"),
     path('profile/',Profile, name="Profile"),
     path('users/',Users, name="Users"),
     path('admin/', admin.site.urls),
