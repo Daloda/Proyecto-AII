@@ -28,8 +28,8 @@ def obtener_marcas():
     recordsMarcas = []
     recordsUrls = []
     for marca in marcas:
-        finalMarca = marca.a.getText().replace(' ', '_')
-        recordsMarcas.append(finalMarca.lower());
+        finalMarca = marca.a.getText()
+        recordsMarcas.append(finalMarca);
         urls = marca.findAll("img")
         for url in urls:
             url = url.get("src").replace('..', '')
@@ -43,7 +43,8 @@ def obtener_modelos():
     marcas, urlMarcas = obtener_marcas()
     recordsModelos = []
     for marca in marcas:
-        paginaMarcas = procesar_pagina("https://motos.coches.net/fichas_tecnicas/" + marca)
+        res = marca.replace(' ', '_').lower()
+        paginaMarcas = procesar_pagina("https://motos.coches.net/fichas_tecnicas/" + res)
         modelos = paginaMarcas.find("div", {"id": "_ctl0_ContentPlaceHolder1_ModelsPictures1_photos"}).find_all('a')
         for modelo in modelos:
             final = modelo.get('href')
@@ -95,6 +96,7 @@ def cargar_marcas_bd():
         
 def cargar_motos_bd():
     i = 0;
+    models.Moto.objects.all().delete()
     caracteristicasTotales = obtener_caracteristicas()
     try:
         for caracteristica in caracteristicasTotales:
@@ -106,8 +108,7 @@ def cargar_motos_bd():
             potencia_maximaFinal = caracteristica[4];
             periodo_comercializacionFinal = caracteristica[5];
             
-            res = marcaNombreD.replace(' ','_').lower()
-            marcaNombreFinal  = models.Marca.objects.all().get(pk=res)
+            marcaNombreFinal  = models.Marca.objects.all().get(pk=marcaNombreD)
         
             motoSave = models.Moto(foto=fotoFinal, modelo=modeloFinal, marcaNombre = marcaNombreFinal, cilindrada=cilindradaFinal, potencia_maxima=potencia_maximaFinal, periodo_comercializacion=periodo_comercializacionFinal)
             motoSave.save()
@@ -117,7 +118,7 @@ def cargar_motos_bd():
     print("Se han guardado " + str(i) + " motos en la BD") 
 
 
-if __name__ == '__main__':
+if __name__ == '_main_':
     cargar_marcas_bd()
     cargar_motos_bd()
 

@@ -169,3 +169,6 @@ class UserCreateFormAdmin(UserCreationForm):
               
             if birthdate > now:
                 self.add_error('birthdate', _('Future date not posible'))
+                
+class SearchForm(forms.Form):
+    queryData = forms.CharField(label='Busca una moto')

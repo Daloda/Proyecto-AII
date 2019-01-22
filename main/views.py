@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .serializers import UserSerializer
 from django.http import HttpResponseRedirect
  
-from .forms import UserCreateForm, UserEditForm
+from .forms import UserCreateForm, UserEditForm, SearchForm
 from django.contrib.auth import logout, login, update_session_auth_hash
  
 from rest_framework import parsers, renderers
@@ -24,16 +24,19 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponse 
 from django.contrib.auth.forms import PasswordChangeForm
 from .tokens import account_activation_token
-from urllib.request import HTTPRedirectHandler
- 
- 
-User=get_user_model()
+from .models import Marca, User
+from whoosh.index import open_dir
+from whoosh.qparser import MultifieldParser
+from whoosh import qparser
 
+dirindex="Index"
+ 
 def index(request):
     return render(request, "index.html")
 
 def Brands(request):
-    return render(request, "marcas.html")
+    marcas = Marca.objects.all()
+    return render(request, "marcas.html", {"marcas": marcas})
      
 def Motorcycle(request):
     return render(request, "moto.html") 
@@ -42,7 +45,24 @@ def Profile(request):
     return render(request, "perfil.html") 
 
 def Users(request):
-    return render(request, "usuarios.html") 
+    usuarios = User.objects.all()
+    return render(request, "usuarios.html", {"usuarios": usuarios})
+
+def searchMotos(request):
+    if request.method=='GET':
+        form = SearchForm(request.GET, request.FILES)
+        if form.is_valid():
+            inputData = form.cleaned_data['inputData']
+            ix=open_dir(dirindex)
+            with ix.searcher() as searcher:
+                query = MultifieldParser(["titulo","descripcion"], ix.schema, group = qparser.AndGroup).parse(str(inputData))
+                results = searcher.search(query, limit=None)
+            return render(request, "search_motos.html", {"results": results})
+    form=SearchForm()
+    return render(request,'marcas.html', {'form':form })
+
+
+User=get_user_model()
 
 class GetUserView(APIView):
     def post(self, request):
