@@ -14,9 +14,9 @@ class UserCreateForm(UserCreationForm):
         ('N', _('Non-binary')),
     )
     ROL_OPTIONS = (
-        ('D', 'Deportivo'),
-        ('A','Aventurero'),
-        ('R','Rutero'),
+        ('D', _('Sports')),
+        ('A', _('Adventurous')),
+        ('R', _('Road')),
     )
     aux=_("Format: dd/mm/YYYY"),
   
@@ -76,9 +76,9 @@ class UserEditForm(UserCreationForm):
         ('N', _('Non-binary')),
     )
     ROL_OPTIONS = (
-        ('D', 'Deportivo'),
-        ('A','Aventurero'),
-        ('R','Rutero'),
+        ('D', _('Sports')),
+        ('A', _('Adventurous')),
+        ('R', _('Road')),
     )
     aux=_("Format: dd/mm/YYYY"),
   
@@ -88,7 +88,7 @@ class UserEditForm(UserCreationForm):
     birthdate = forms.DateField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
     city = forms.CharField(label=_('City'),required=True)
     sex = forms.ChoiceField(label=_('Sex'),choices=SEX_OPTIONS, required=False)
-    rol = forms.ChoiceField(label=_('Rol'),choices=ROL_OPTIONS, required=False)
+    rol = forms.ChoiceField(label=_('Role'),choices=ROL_OPTIONS, required=False)
     urlFoto = forms.URLField(label=_("Photo's URL"), required=False)
     password1 = forms.CharField(
         label=_("Change password"),
@@ -143,9 +143,9 @@ class UserCreateFormAdmin(UserCreationForm):
         ('N', _('Non-binary')),
     )
     ROL_OPTIONS = (
-        ('D', 'Deportivo'),
-        ('A','Aventurero'),
-        ('R','Rutero'),
+        ('D', _('Sports')),
+        ('A', _('Adventurous')),
+        ('R', _('Road')),
     )
     aux=_("Format: dd/mm/YYYY"),
   
@@ -155,7 +155,7 @@ class UserCreateFormAdmin(UserCreationForm):
     birthdate = forms.DateField(label=_('Birthdate'),input_formats=['%d/%m/%Y'], help_text=aux, required=False)
     city = forms.CharField(label=_('City'),required=True)
     sex = forms.ChoiceField(label=_('Sex'),choices=SEX_OPTIONS, required=False)
-    rol = forms.ChoiceField(label=_('Rol'),choices=ROL_OPTIONS, required=False)
+    rol = forms.ChoiceField(label=_('Role'),choices=ROL_OPTIONS, required=False)
     urlFoto = forms.URLField(label=_("Photo's URL"), required=False)
   
     class Meta:
@@ -198,4 +198,4 @@ class UserCreateFormAdmin(UserCreationForm):
                 self.add_error('birthdate', _('Future date not posible'))
                 
 class SearchForm(forms.Form):
-    inputData = forms.CharField(label='',widget=forms.TextInput(attrs={'type' : 'search', 'class':'myField', 'placeholder':'Busca una moto'}))
+    inputData = forms.CharField(label='',widget=forms.TextInput(attrs={'type' : 'search', 'class':'myField', 'placeholder': _('Search a bike')}))
