@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h4>Marcas</h4>
+<h4>{% trans "Brands" %}</h4>
 <br>
 <div class="search-bikes row">
 	<div class="col s6 offset-s3">
@@ -31,7 +31,8 @@
 					</div>
 				{% endfor %} 
 			{% else %}
-				<p>No hay marcas disponibles</p>
+				<br>
+				<p>{% trans "There are not available brands" %}</p>
 			{% endif %}
     	</div>
 </div>

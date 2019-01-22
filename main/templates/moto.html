@@ -14,22 +14,22 @@
             <div class="card-content">
                 <span class="card-title activator grey-text text-darken-4">{{moto.modelo}}</span>
                 <blockquote>
-                    <p>Cilindrada: {{moto.cilindrada}}</p> 
+                    <p>{% trans "Displacement" %}: {{moto.cilindrada}}</p> 
                 </blockquote>
                 <blockquote>
-                    <p>Fabricante: {{moto.marcaNombre}}</p> 
+                    <p>{% trans "Maker" %}: {{moto.marcaNombre}}</p> 
                 </blockquote>
                 <blockquote>
-                    <p>Potencia maxima: {{moto.potencia_maxima}}</p> 
+                    <p>{% trans "Maximum power" %}: {{moto.potencia_maxima}}</p> 
                 </blockquote>
                 <blockquote>
-                    <p>Periodo de comercializacion: {{moto.periodo_comercializacion}}</p> 
+                    <p>{% trans "Marketing period" %}: {{moto.periodo_comercializacion}}</p> 
                 </blockquote>
                 </div>
                 
             {% if user.is_authenticated == True %}
                 <div class="row">
-                    <a class="grey darken-2 waves-effect waves-light btn pulse">Add to your bikes</a>
+                    <a class="grey darken-2 waves-effect waves-light btn pulse">{% trans Add to your bikes %}</a>
                 </div>
                 <div class="card-action">
                     <div class="rating">
