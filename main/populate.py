@@ -226,7 +226,7 @@ def buscarModelo():
 
 def loadDict():
     Prefs={}
-    shelf = shelve.open("dataRS.dat")
+    shelf = shelve.open("../dataRS.dat")
     ratings = models.Rating.objects.all()
     for ra in ratings:
         user = int(ra.usuario.id)
@@ -235,9 +235,11 @@ def loadDict():
         Prefs.setdefault(user, {})
         Prefs[user][itemid] = rating
     shelf['Prefs']=Prefs
+    print(Prefs)
     shelf['ItemsPrefs']=transformPrefs(Prefs)
     shelf['SimItems']=calculateSimilarItems(Prefs, n=10)
     shelf.close()
+    messagebox.showinfo("Carga completada", "Se ha cargado correctamente el Sistema de Recomendacion")
             
 
 root = Tk()

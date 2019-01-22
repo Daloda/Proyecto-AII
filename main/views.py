@@ -36,7 +36,7 @@ from whoosh import qparser
 from AII2Project.settings import INDEX_PATH
 
 import shelve
-from main.recommendations import getRecommendedItems
+from main.recommendations import getRecommendedItems, transformPrefs, calculateSimilarItems
 
 
 def index(request):
@@ -126,8 +126,25 @@ def add_moto(request, motoId):
             return render(request, "moto.html", {'moto': mot, 'added': True, 'mensaje': _('Bike added correctly')})
     return render(request, "moto.html", {'moto': mot})
 
+def loadDict():
+    Prefs={}
+    shelf = shelve.open("dataRS.dat")
+    ratings = models.Rating.objects.all()
+    for ra in ratings:
+        user = int(ra.usuario.id)
+        itemid = int(ra.moto.id)
+        rating = float(ra.rating)
+        Prefs.setdefault(user, {})
+        Prefs[user][itemid] = rating
+    shelf['Prefs']=Prefs
+    print(Prefs)
+    shelf['ItemsPrefs']=transformPrefs(Prefs)
+    shelf['SimItems']=calculateSimilarItems(Prefs, n=10)
+    shelf.close()
+
 def Ratings(request, motoId, value):
     if (request.session.has_key('_auth_user_id')):
+        added = False
         uid = request.session.get('_auth_user_id')
         token = request.session.get('auth-token')
         user = post(entry_point='/getuser/', json={'token': token})
@@ -141,14 +158,21 @@ def Ratings(request, motoId, value):
             mot = Moto.objects.get(pk=motoId)
             rat = Rating(usuario=userRat, moto=mot, rating=int(value))
             rat.save()
-            return render(request, "moto.html", {'moto': mot, 'mensaje': _('Bike rated correctly')})
+            motos = userRat.moto.all()
+            if mot in motos:
+                added = True
+            loadDict() 
+            return render(request, "moto.html", {'moto': mot, 'added': added, 'mensaje': _('Bike rated correctly')})
     return render(request, "moto.html", {'moto': mot})
 
 
 def recommendedMotos(request):
     if (request.session.has_key('_auth_user_id')):
         idUser = request.session.get('_auth_user_id')
-#         user = models.User.objects.get(pk=idUser)
+        user = models.User.objects.get(pk=idUser)
+        rats = Rating.objects.filter(usuario=user)
+        if len(rats) == 0:
+            return render(request, "index.html") 
         shelf = shelve.open("dataRS.dat")
         Prefs = shelf['Prefs']
         SimItems = shelf['SimItems']

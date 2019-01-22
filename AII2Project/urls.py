@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path
 from main.views import Users,Profile,Motorcycle,Brands,Activate, obtain_auth_token, obtain_auth_token_rrss, GetUserView, LogoutView, signUp, form_login, index,edit_user, Models, Ratings, recommendedMotos, add_moto
 
-
 urlpatterns = [
     path('', index, name="index"),
     path('brands/', Brands, name="Brands"),
