@@ -35,9 +35,9 @@ from whoosh import qparser
 from AII2Project.settings import INDEX_PATH
 
 import shelve
-from main.recommendations import  transformPrefs, calculateSimilarItems, getRecommendedItems, topMatches
+from main.recommendations import getRecommendedItems
 
- 
+
 def index(request):
     return render(request, "index.html")
 
@@ -52,6 +52,7 @@ def Brands(request):
                 query = MultifieldParser(["modelo","marcaNombre"], ix.schema, group = qparser.AndGroup).parse(str(inputData))
                 results = searcher.search(query, limit=None)
                 return render(request, "modelos.html", {"form": form, "modelos": results})
+
     marcas = Marca.objects.all()
     form=SearchForm()
     return render(request, "marcas.html", {"form": form, "marcas": marcas})
