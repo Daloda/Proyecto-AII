@@ -29,27 +29,46 @@ from .tokens import account_activation_token
 from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser
 from whoosh import qparser
+from AII2Project.settings import INDEX_PATH
 
-
-dirindex="Index"
  
 def index(request):
     return render(request, "index.html")
 
 
 def Brands(request):
+    if request.method=='GET':
+        form = SearchForm(request.GET, request.FILES)
+        if form.is_valid():
+            inputData = form.cleaned_data['inputData']
+            ix=open_dir(INDEX_PATH)
+            with ix.searcher() as searcher:
+                query = MultifieldParser(["modelo","marcaNombre"], ix.schema, group = qparser.AndGroup).parse(str(inputData))
+                results = searcher.search(query, limit=None)
+                return render(request, "modelos.html", {"modelos": results})
     marcas = Marca.objects.all()
-    return render(request, "marcas.html", {"marcas": marcas})
+    form=SearchForm()
+    return render(request, "marcas.html", {"form": form, "marcas": marcas})
 
      
 def Models(request, nombreMarcaURL):
+    if request.method=='GET':
+        form = SearchForm(request.GET, request.FILES)
+        if form.is_valid():
+            inputData = form.cleaned_data['inputData']
+            ix=open_dir(INDEX_PATH)
+            with ix.searcher() as searcher:
+                query = MultifieldParser(["modelo","marcaNombre"], ix.schema, group = qparser.AndGroup).parse(str(inputData))
+                results = searcher.search(query, limit=None)
+                return render(request, "modelos.html", {"modelos": results})
     modelos = []
     modelosTotales = Moto.objects.all()
     for moto in modelosTotales:
         if (str(moto.marcaNombre) == str(nombreMarcaURL)):
             modelos.append(moto)
-          
-    return render(request, 'modelos.html', {'modelos':modelos})
+            
+    form=SearchForm()     
+    return render(request, 'modelos.html', {"form": form,'modelos':modelos})
 
 
 def Motorcycle(request):
@@ -63,19 +82,6 @@ def Profile(request):
 def Users(request):
     usuarios = User.objects.all()
     return render(request, "usuarios.html", {"usuarios": usuarios})
-
-def searchMotos(request):
-    if request.method=='GET':
-        form = SearchForm(request.GET, request.FILES)
-        if form.is_valid():
-            inputData = form.cleaned_data['inputData']
-            ix=open_dir(dirindex)
-            with ix.searcher() as searcher:
-                query = MultifieldParser(["titulo","descripcion"], ix.schema, group = qparser.AndGroup).parse(str(inputData))
-                results = searcher.search(query, limit=None)
-            return render(request, "search_motos.html", {"results": results})
-    form=SearchForm()
-    return render(request,'marcas.html', {'form':form })
 
 
 User=get_user_model()

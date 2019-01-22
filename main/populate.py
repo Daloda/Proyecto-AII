@@ -1,5 +1,4 @@
 # encoding:utf-8
-
 import os
 from tkinter import *
 from tkinter import messagebox
@@ -16,7 +15,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "AII2Project.settings")
 django.setup()
 
 from main import models
-
 
 
 # Obtener marcas
@@ -95,11 +93,11 @@ def cargar_marcas_bd():
             marcaSave = models.Marca(marcaNombre=marcaD, logo=urlMarcaD)
             marcaSave.save()
     except:
-        print("Hay un problema con la marca en la posición", x, ". Mensaje de error:", sys.exc_info()[0])
-        messagebox.showinfo("Hay un problema con la marca en la posición", x, ". Mensaje de error:", sys.exc_info()[0])
+        print("Hay un problema con la marca en la posición " + str(x) + ". Mensaje de error:", sys.exc_info()[0])
+        messagebox.showinfo("Hay un problema con la marca en la posición" + str(x) + ". Mensaje de error:", sys.exc_info()[0])
      
     print("Se han guardado " + str(x) + " marcas en la BD") 
-    messagebox.showinfo("Se han guardado " + str(x) + " marcas en la BD")
+    messagebox.showinfo("Marcas guardada", "Se han guardado " + str(x) + " marcas en la BD")
 
         
 def cargar_motos_bd():
@@ -122,19 +120,30 @@ def cargar_motos_bd():
             motoSave = models.Moto(foto=fotoFinal, modelo=modeloFinal, marcaNombre=marcaNombreFinal, cilindrada=cilindradaFinal, potencia_maxima=potencia_maximaFinal, periodo_comercializacion=periodo_comercializacionFinal)
             motoSave.save()
     except:
-        print("Hay un problema con la moto en la posición", i, ". Mensaje de error:", sys.exc_info()[0])
-        messagebox.showinfo("Hay un problema con la moto en la posición", i, ". Mensaje de error:", sys.exc_info()[0])
+        print("Hay un problema con la moto en la posición " + str(i) + ". Mensaje de error:", sys.exc_info()[0])
+        messagebox.showinfo("Hay un problema con la moto en la posición" + str(i) + ". Mensaje de error:", sys.exc_info()[0])
 
     print("Se han guardado " + str(i) + " motos en la BD") 
-    messagebox.showinfo("Se han guardado " + str(i) + " motos en la BD")
+    messagebox.showinfo("Motos guardada", "Se han guardado " + str(i) + " motos en la BD")
 
 
 
 # Se aplica Whoosh----------------------------------------
 dirindex = "Index"
 
+def cargar_marcas_bd_whoosh():
+    models.Marca.objects.all().delete()
+    marcas, urlMarcas = obtener_marcas()
+    tamano = len(marcas)
+    for x in range(0, tamano):
+        marcaD = marcas[x]
+        urlMarcaD = urlMarcas[x] 
+        marcaSave = models.Marca(marcaNombre=marcaD, logo=urlMarcaD)
+        marcaSave.save()
+
 
 def add_docs(writer):
+    cargar_marcas_bd_whoosh()
     caracteristicasTotales = obtener_caracteristicas()
     i = 0
     try:
@@ -151,11 +160,11 @@ def add_docs(writer):
             
             writer.add_document(foto=fotoWhoosh, marcaNombre=marcaNombreWhoosh, modelo=modeloWhoosh, cilindrada=cilindradaWhoosh, potencia_maxima=potencia_maximaWhoosh, periodo_comercializacion=periodo_comercializacionWhoosh)
     except:
-        print("Hay un problema con la moto en la posición", i, ". Mensaje de error:", sys.exc_info()[0])
-        messagebox.showinfo("Hay un problema con la moto en la posición", i, ". Mensaje de error:", sys.exc_info()[0])
+        print("Hay un problema con la moto en la posición " + str(i) + ". Mensaje de error:", sys.exc_info()[0])
+        messagebox.showinfo("Hay un problema con la moto en la posición" + str(i) + ". Mensaje de error:", sys.exc_info()[0])
            
     print("Fin de indexado", "Se han indexado " + str(i) + " motos")
-    messagebox.showinfo("Fin de indexado", "Se han indexado " + str(i) + " motos")
+    messagebox.showinfo("Fin de indexado.", "Se han indexado " + str(i) + " motos")
 
         
 def indexar():
