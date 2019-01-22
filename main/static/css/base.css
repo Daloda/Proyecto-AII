@@ -30,8 +30,7 @@ body{
 .index-container{
     margin-top: -50px;
     margin-bottom: -50px;
-    width: 120%;
-    margin-left: -10%
+    width: 100%;
 }
 .menu{
     font-family: 'Satisfy', cursive ;
