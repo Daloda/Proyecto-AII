@@ -71,9 +71,13 @@ def Models(request, nombreMarcaURL):
     return render(request, 'modelos.html', {"form": form,'modelos':modelos})
 
 
-def Motorcycle(request):
-    modelo = Moto.objects.all()
-    return render(request, 'modelos.html', {'modelos': modelo})
+def Motorcycle(request,idMoto):
+    motoSalida = None
+    modelosTotales = Moto.objects.all()
+    for moto in modelosTotales:
+        if (str(moto.id) == str(idMoto)):
+            motoSalida = moto            
+    return render(request, 'moto.html', {'moto': motoSalida})
 
 
 def Profile(request):

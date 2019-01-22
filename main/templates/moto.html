@@ -4,33 +4,26 @@
   
 {% block content %}
 
-<!-- Para el login con redes sociales, es necesario acceder desde localhost, no 127.0.0.1 -->
-{% if request.build_absolute_uri == "http://127.0.0.1:8000/" %}
-  <script>
-    window.location.replace("http://localhost:8000/motorcycle");
-  </script>
-{% endif %}
-<br>
 <div class="container">
   <div class="col s12 m7">
     <div class="card horizontal grey">
       <div class="card-image">
-        <img src="https://a.mcdn.es/mnet_ft//BMW/C_evolution/32535MG.jpg/660x/">
+        <img src="{{moto.foto}}/">
       </div>
       <div class="card-stacked">
             <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Modelo</span>
+                <span class="card-title activator grey-text text-darken-4">{{moto.modelo}}</span>
                 <blockquote>
-                    <p>Cilindrada: </p>
+                    <p>Cilindrada: </p> {{moto.cilindrada}}
                 </blockquote>
                 <blockquote>
-                    <p>Fabricante: </p>
+                    <p>Fabricante: </p> {{moto.marcaNombre}}
                 </blockquote>
                 <blockquote>
-                    <p>Potencia maxima: </p>
+                    <p>Potencia maxima: </p> {{moto.potencia_maxima}}
                 </blockquote>
                 <blockquote>
-                    <p>Periodo de comercializacion: </p>
+                    <p>Periodo de comercializacion: </p> {{moto.periodo_comercializacion}}
                 </blockquote>
                 </div>
             <div class="card-action">
