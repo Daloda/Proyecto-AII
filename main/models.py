@@ -15,6 +15,7 @@ class Marca(models.Model):
         return self.marcaNombre
     
 class Moto(models.Model):
+    id = models.CharField(primary_key=True, max_length=100)
     foto = models.CharField(_('Photo'),max_length=30, null=True)
     modelo = models.CharField(_('Model'),max_length=30)
     marcaNombre = models.ForeignKey(Marca,on_delete=models.CASCADE, null=True)

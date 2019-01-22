@@ -107,6 +107,7 @@ def cargar_motos_bd():
     try:
         for caracteristica in caracteristicasTotales:
             i = i + 1;
+            idFinal = str(i)
             fotoFinal = caracteristica[0];
             marcaNombreD = caracteristica[1];
             modeloFinal = caracteristica[2];
@@ -117,7 +118,7 @@ def cargar_motos_bd():
             marcaNombreFinal = models.Marca.objects.all().get(pk=marcaNombreD)
         
             # Guardamos los valores en base de datos             
-            motoSave = models.Moto(foto=fotoFinal, modelo=modeloFinal, marcaNombre=marcaNombreFinal, cilindrada=cilindradaFinal, potencia_maxima=potencia_maximaFinal, periodo_comercializacion=periodo_comercializacionFinal)
+            motoSave = models.Moto(id=idFinal, foto=fotoFinal, modelo=modeloFinal, marcaNombre=marcaNombreFinal, cilindrada=cilindradaFinal, potencia_maxima=potencia_maximaFinal, periodo_comercializacion=periodo_comercializacionFinal)
             motoSave.save()
     except:
         print("Hay un problema con la moto en la posición " + str(i) + ". Mensaje de error:", sys.exc_info()[0])
@@ -143,12 +144,15 @@ def cargar_marcas_bd_whoosh():
 
 
 def add_docs(writer):
-    cargar_marcas_bd_whoosh()
+    marcas = models.Marca.objects.all()
+    if not len(marcas) > 0:
+        cargar_marcas_bd_whoosh()
     caracteristicasTotales = obtener_caracteristicas()
     i = 0
     try:
         for caracteristica in caracteristicasTotales:
             i = i + 1;
+            idWhoosh = str(i)
             fotoWhoosh = caracteristica[0];
             marcaNombreD = caracteristica[1];
             modeloWhoosh = caracteristica[2];
@@ -158,13 +162,13 @@ def add_docs(writer):
                 
             marcaNombreWhoosh = models.Marca.objects.all().get(pk=marcaNombreD).marcaNombre
             
-            writer.add_document(foto=fotoWhoosh, marcaNombre=marcaNombreWhoosh, modelo=modeloWhoosh, cilindrada=cilindradaWhoosh, potencia_maxima=potencia_maximaWhoosh, periodo_comercializacion=periodo_comercializacionWhoosh)
+            writer.add_document(id=idWhoosh, foto=fotoWhoosh, marcaNombre=marcaNombreWhoosh, modelo=modeloWhoosh, cilindrada=cilindradaWhoosh, potencia_maxima=potencia_maximaWhoosh, periodo_comercializacion=periodo_comercializacionWhoosh)
     except:
         print("Hay un problema con la moto en la posición " + str(i) + ". Mensaje de error:", sys.exc_info()[0])
         messagebox.showinfo("Hay un problema con la moto en la posición" + str(i) + ". Mensaje de error:", sys.exc_info()[0])
            
-    print("Fin de indexado", "Se han indexado " + str(i) + " motos")
-    messagebox.showinfo("Fin de indexado.", "Se han indexado " + str(i) + " motos")
+    print("Fin de indexado.", "Se han indexado " + str(i) + " motos")
+    messagebox.showinfo("Fin de indexado", "Se han indexado " + str(i) + " motos")
 
         
 def indexar():
@@ -180,7 +184,7 @@ def indexar():
 
 
 def get_schema():
-    return Schema(foto=TEXT(stored=True), marcaNombre=TEXT(stored=True), modelo=TEXT(stored=True),
+    return Schema(id=TEXT(stored=True), foto=TEXT(stored=True), marcaNombre=TEXT(stored=True), modelo=TEXT(stored=True),
                   cilindrada=TEXT(stored=True), potencia_maxima=TEXT(stored=True), periodo_comercializacion=TEXT(stored=True))
      
      
